@@ -34,8 +34,7 @@ const About: React.FC = () => {
             About Me
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            I'm passionate about creating innovative solutions that combine cutting-edge AI technology 
-            with practical, user-focused applications.
+            Android engineer specializing in AI-driven app development. I excel at designing and implementing applications that leverage artificial intelligence to deliver innovative and user-friendly experiences.
           </p>
         </div>
 
