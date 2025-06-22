@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         <div className="text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Code2 className="w-6 h-6 text-blue-400" />
-            <span className="text-xl font-bold">Osawaru</span>
+            <span className="text-xl font-bold">Osawaru's Portfolio</span>
           </div>
           
           <p className="text-gray-400 mb-6">
@@ -18,9 +18,15 @@ const Footer: React.FC = () => {
           <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
             <span>Made with</span>
             <Heart className="w-4 h-4 text-red-500 fill-current" />
-            <span>by Osawaru</span>
+            <span>by Osawaru's Portfolio</span>
             <span className="mx-2">•</span>
             <span>{new Date().getFullYear()}</span>
+          </div>
+          
+          <div className="mt-4">
+            <a href="https://github.com/hafljin" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">GitHub</a>
+            <span className="mx-2">•</span>
+            <a href="mailto:moneypro@gmail.com" className="underline hover:text-blue-600">Contact</a>
           </div>
         </div>
       </div>

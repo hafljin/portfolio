@@ -19,7 +19,7 @@ const Header: React.FC = () => {
           {/* Content */}
           <div className="flex-1 text-center lg:text-left">
             <h1 className="text-4xl sm:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
-              {profile.name}
+              Osawaru's Portfolio
             </h1>
             <h2 className="text-xl sm:text-2xl text-blue-200 mb-6 font-medium">
               {profile.title}
@@ -37,7 +37,7 @@ const Header: React.FC = () => {
             {/* Social Links */}
             <div className="flex gap-4 justify-center lg:justify-start">
               <a
-                href="https://github.com/osawaru"
+                href="https://github.com/hafljin"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 bg-white/10 hover:bg-white/20 rounded-full transition-all duration-200 hover:scale-110"
@@ -53,7 +53,7 @@ const Header: React.FC = () => {
                 <Linkedin className="w-6 h-6" />
               </a>
               <a
-                href="mailto:osawaru@example.com"
+                href="mailto:moneypro@gmail.com"
                 className="p-3 bg-white/10 hover:bg-white/20 rounded-full transition-all duration-200 hover:scale-110"
               >
                 <Mail className="w-6 h-6" />

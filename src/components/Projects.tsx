@@ -1,28 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { projects as initialProjects } from '../data/mockData';
 import { Project, Comment } from '../types';
 import ProjectCard from './ProjectCard';
 
-const Projects: React.FC = () => {
-  // Local state for projects - all data is mock and not persisted to any backend
-  const [projects, setProjects] = useState<Project[]>(initialProjects);
+const LOCAL_STORAGE_KEY = 'portfolio_projects_v1';
 
-  // Mock like functionality - local only, not persisted
-  const handleLike = (projectId: string) => {
+const Projects: React.FC = () => {
+  // localStorageから初期値を取得
+  const getInitialProjects = () => {
+    const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : initialProjects;
+  };
+
+  const [projects, setProjects] = useState<Project[]>(getInitialProjects);
+
+  // projectsが変わるたびにlocalStorageへ保存
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(projects));
+  }, [projects]);
+
+  // いいねのトグル機能
+  const handleLike = (projectId: string, liked: boolean) => {
     setProjects(currentProjects =>
       currentProjects.map(project =>
         project.id === projectId
-          ? { ...project, likes: project.likes + 1 }
+          ? { ...project, likes: liked ? project.likes + 1 : Math.max(0, project.likes - 1) }
           : project
       )
     );
-    // Note: This is mock functionality only - likes are not saved to any backend
   };
 
-  // Mock comment functionality - local only, not persisted
+  // コメントの永続化
   const handleComment = (projectId: string, newComment: Omit<Comment, 'id' | 'timestamp'>) => {
     const comment: Comment = {
-      id: Date.now().toString(), // Simple ID generation for mock data
+      id: Date.now().toString(),
       ...newComment,
       timestamp: Date.now()
     };
@@ -34,7 +45,6 @@ const Projects: React.FC = () => {
           : project
       )
     );
-    // Note: This is mock functionality only - comments are not saved to any backend
   };
 
   return (

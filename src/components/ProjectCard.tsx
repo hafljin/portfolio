@@ -1,28 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Heart, MessageCircle, Github, ExternalLink, Code } from 'lucide-react';
 import { Project, Comment } from '../types';
 
 interface ProjectCardProps {
   project: Project;
-  onLike: (projectId: string) => void;
+  onLike: (projectId: string, liked: boolean) => void;
   onComment: (projectId: string, comment: Omit<Comment, 'id' | 'timestamp'>) => void;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment }) => {
+  const LIKE_KEY = `portfolio_like_${project.id}`;
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState({ author: '', text: '' });
   const [isLiked, setIsLiked] = useState(false);
 
+  useEffect(() => {
+    const liked = localStorage.getItem(LIKE_KEY) === '1';
+    setIsLiked(liked);
+  }, [LIKE_KEY]);
+
   const handleLike = () => {
-    // Mock local-only like functionality - not persisted to any backend
-    setIsLiked(!isLiked);
-    onLike(project.id);
+    const nextLiked = !isLiked;
+    setIsLiked(nextLiked);
+    localStorage.setItem(LIKE_KEY, nextLiked ? '1' : '0');
+    onLike(project.id, nextLiked);
   };
 
   const handleSubmitComment = (e: React.FormEvent) => {
     e.preventDefault();
     if (newComment.author.trim() && newComment.text.trim()) {
-      // Mock local-only comment functionality - not persisted to any backend
       onComment(project.id, newComment);
       setNewComment({ author: '', text: '' });
     }
