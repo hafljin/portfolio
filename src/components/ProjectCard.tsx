@@ -35,7 +35,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
+    <div className="bg-business.light rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
       {/* Project Image */}
       <div className="relative overflow-hidden">
         <img
@@ -49,11 +49,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
       {/* Content */}
       <div className="p-6">
         <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
-          {project.title}
+          <span className="text-business.navy">{project.title}</span>
         </h3>
         
         <p className="text-gray-600 mb-4 line-clamp-2">
-          {project.description}
+          <span className="text-business.navy">{project.description}</span>
         </p>
 
         {/* Tech Stack */}
@@ -61,14 +61,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
           {project.techStack.slice(0, 3).map((tech, index) => (
             <span
               key={index}
-              className="px-2 py-1 bg-blue-50 text-blue-700 rounded-md text-xs font-medium"
+              className="px-2 py-1 bg-business.base text-business.green rounded-md text-xs font-medium"
             >
               {tech}
             </span>
           ))}
           {project.techStack.length > 3 && (
             <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded-md text-xs font-medium">
-              +{project.techStack.length - 3} more
+              <span className="text-business.green">+{project.techStack.length - 3}件以上</span>
             </span>
           )}
         </div>
@@ -80,20 +80,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
+              className="flex items-center gap-2 px-3 py-2 bg-business.navy text-business.light rounded-lg hover:bg-business.base transition-colors text-sm font-medium"
             >
               <Github className="w-4 h-4" />
-              Code
+              コード
             </a>
             {project.demoUrl && (
               <a
                 href={project.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                className="flex items-center gap-2 px-3 py-2 bg-business.green text-business.light rounded-lg hover:bg-business.base transition-colors text-sm font-medium"
               >
                 <ExternalLink className="w-4 h-4" />
-                Demo
+                デモ
               </a>
             )}
           </div>
@@ -106,8 +106,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
               onClick={handleLike}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
                 isLiked
-                  ? 'bg-red-50 text-red-600'
-                  : 'bg-gray-50 text-gray-600 hover:bg-red-50 hover:text-red-600'
+                  ? 'bg-business.base text-business.green'
+                  : 'bg-business.light text-business.navy hover:bg-business.base hover:text-business.green'
               }`}
             >
               <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
@@ -116,7 +116,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
             
             <button
               onClick={() => setShowComments(!showComments)}
-              className="flex items-center gap-2 px-3 py-2 bg-gray-50 text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-all"
+              className="flex items-center gap-2 px-3 py-2 bg-business.light text-business.navy rounded-lg hover:bg-business.base hover:text-business.green transition-all"
             >
               <MessageCircle className="w-4 h-4" />
               <span className="text-sm font-medium">{project.comments.length}</span>
@@ -132,13 +132,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
               <div className="grid grid-cols-1 gap-3">
                 <input
                   type="text"
-                  placeholder="Your name"
+                  placeholder="お名前"
                   value={newComment.author}
                   onChange={(e) => setNewComment({ ...newComment, author: e.target.value })}
                   className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 />
                 <textarea
-                  placeholder="Add a comment..."
+                  placeholder="コメントを追加..."
                   value={newComment.text}
                   onChange={(e) => setNewComment({ ...newComment, text: e.target.value })}
                   className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm resize-none"
@@ -148,7 +148,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
                   type="submit"
                   className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
                 >
-                  Post Comment
+                  コメント投稿
                 </button>
               </div>
             </form>
@@ -159,12 +159,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
                 {project.comments.map((comment) => (
                   <div key={comment.id} className="bg-gray-50 rounded-lg p-3">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="font-medium text-gray-900 text-sm">{comment.author}</span>
-                      <span className="text-gray-500 text-xs">
+                      <span className="font-medium text-business.navy text-sm">{comment.author}</span>
+                      <span className="text-business.green text-xs">
                         {new Date(comment.timestamp).toLocaleDateString()}
                       </span>
                     </div>
-                    <p className="text-gray-700 text-sm">{comment.text}</p>
+                    <p className="text-business.navy text-sm">{comment.text}</p>
                   </div>
                 ))}
               </div>
@@ -172,10 +172,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
 
             {/* Mock Data Warning Comment */}
             {project.comments.length === 0 && (
-              <p className="text-gray-500 text-sm italic text-center py-4">
-                No comments yet. Be the first to comment! 
+              <p className="text-business.green text-sm italic text-center py-4">
+                コメントはまだありません。最初のコメントを投稿しませんか？
                 <span className="block text-xs mt-1">
-                  (Note: Comments are stored locally only - not persisted)
+                  （注意：コメントはローカル保存のみで永続化されません）
                 </span>
               </p>
             )}

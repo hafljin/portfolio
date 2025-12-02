@@ -6,35 +6,35 @@ const About: React.FC = () => {
   const skillCategories = [
     {
       icon: <Code2 className="w-6 h-6" />,
-      title: "Languages & Frameworks",
+      title: "言語・フレームワーク",
       skills: profile.skills.slice(0, 4)
     },
     {
       icon: <Brain className="w-6 h-6" />,
-      title: "AI & Machine Learning",
+      title: "AI・機械学習",
       skills: profile.skills.slice(4, 7)
     },
     {
       icon: <Smartphone className="w-6 h-6" />,
-      title: "Mobile & Backend",
+      title: "モバイル・バックエンド",
       skills: profile.skills.slice(7, 10)
     },
     {
       icon: <Database className="w-6 h-6" />,
-      title: "Tools & Infrastructure",
+      title: "ツール・インフラ",
       skills: profile.skills.slice(10)
     }
   ];
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-business.base text-business.green">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            About Me
+            私について
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Android engineer specializing in AI-driven app development. I excel at designing and implementing applications that leverage artificial intelligence to deliver innovative and user-friendly experiences.
+            AIを活用したアプリ開発や自動化を得意とします。<br />革新的で使いやすい体験を提供するアプリケーションの設計・実装に自信があります。
           </p>
         </div>
 
@@ -71,15 +71,15 @@ const About: React.FC = () => {
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-8">
           <div className="text-center">
             <div className="text-4xl font-bold text-blue-600 mb-2">6+</div>
-            <div className="text-gray-600">Featured Projects</div>
+            <div className="text-gray-600">注目プロジェクト</div>
           </div>
           <div className="text-center">
             <div className="text-4xl font-bold text-emerald-600 mb-2">3+</div>
-            <div className="text-gray-600">Years Experience</div>
+            <div className="text-gray-600">経験年数</div>
           </div>
           <div className="text-center">
             <div className="text-4xl font-bold text-purple-600 mb-2">12+</div>
-            <div className="text-gray-600">Technologies</div>
+            <div className="text-gray-600">技術スタック</div>
           </div>
         </div>
       </div>

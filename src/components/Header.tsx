@@ -4,7 +4,7 @@ import { profile } from '../data/mockData';
 
 const Header: React.FC = () => {
   return (
-    <header className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white">
+    <header className="bg-business.navy text-business.light">
       <div className="max-w-6xl mx-auto px-4 py-16 sm:py-24">
         <div className="flex flex-col lg:flex-row items-center gap-12">
           {/* Avatar */}
@@ -19,13 +19,13 @@ const Header: React.FC = () => {
           {/* Content */}
           <div className="flex-1 text-center lg:text-left">
             <h1 className="text-4xl sm:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
-              Osawaru's Portfolio
+              <span className="text-business.green">Osawaruのポートフォリオ</span>
             </h1>
             <h2 className="text-xl sm:text-2xl text-blue-200 mb-6 font-medium">
-              {profile.title}
+              <span className="text-business.green">{profile.title}</span>
             </h2>
             <p className="text-lg text-gray-300 mb-8 leading-relaxed max-w-2xl">
-              {profile.bio}
+              <span className="text-business.base">{profile.bio}</span>
             </p>
             
             {/* Location */}

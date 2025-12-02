@@ -4,8 +4,8 @@ import { Project, Profile } from '../types';
 // No backend or API integration - all data is local
 export const profile: Profile = {
   name: "Osawaru",
-  title: "AI Developer & Software Engineer",
-  bio: "Engineer specializing in mobile development. Delivers ultra-fast, user-friendly, and secure solutions leveraging AI technology.",
+  title: "AI開発者・ソフトウェアエンジニア",
+  bio: "モバイル開発を専門とするエンジニアです。AI技術を活用し、超高速・使いやすく・安全なソリューションを提供します。",
   location: "Tokyo, Japan",
   skills: [
     "Kotlin", "React", "TypeScript", "Python", 
