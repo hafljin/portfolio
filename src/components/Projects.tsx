@@ -48,14 +48,14 @@ const Projects: React.FC = () => {
   };
 
   return (
-    <section className="py-20 bg-business.base text-business.green">
+    <section className="py-20 bg-business.base text-business.light">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            プロジェクト一覧
+            <span className="text-business.accent">プロジェクト一覧</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            AI・モバイル・ソフトウェア開発の最新事例をご紹介します。
+            <span className="text-business.light">AI・モバイル・ソフトウェア開発の最新事例をご紹介します。</span>
           </p>
         </div>
 

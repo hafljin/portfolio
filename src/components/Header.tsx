@@ -19,19 +19,19 @@ const Header: React.FC = () => {
           {/* Content */}
           <div className="flex-1 text-center lg:text-left">
             <h1 className="text-4xl sm:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
-              <span className="text-business.green">Osawaruのポートフォリオ</span>
+              <span className="text-business.accent">Osawaruのポートフォリオ</span>
             </h1>
             <h2 className="text-xl sm:text-2xl text-blue-200 mb-6 font-medium">
-              <span className="text-business.green">{profile.title}</span>
+              <span className="text-business.accent">{profile.title}</span>
             </h2>
             <p className="text-lg text-gray-300 mb-8 leading-relaxed max-w-2xl">
-              <span className="text-business.base">{profile.bio}</span>
+              <span className="text-business.light">{profile.bio}</span>
             </p>
             
             {/* Location */}
             <div className="flex items-center justify-center lg:justify-start gap-2 mb-8">
-              <MapPin className="w-5 h-5 text-blue-400" />
-              <span className="text-gray-300">{profile.location}</span>
+              <MapPin className="w-5 h-5 text-business.accent" />
+              <span className="text-business.light">{profile.location}</span>
             </div>
             
             {/* Social Links */}

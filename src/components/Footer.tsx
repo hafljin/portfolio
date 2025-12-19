@@ -6,18 +6,18 @@ const Footer: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <Code2 className="w-6 h-6 text-blue-400" />
-            <span className="text-xl font-bold">Osawaruのポートフォリオ</span>
+            <Code2 className="w-6 h-6 text-business.accent" />
+            <span className="text-xl font-bold text-business.accent">Osawaruのポートフォリオ</span>
           </div>
           <p className="text-gray-400 mb-6">
-            AIと革新的なソフトウェアで未来を創る
+            <span className="text-business.light">AIと革新的なソフトウェアで未来を創る</span>
           </p>
           <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
-            <span>制作:</span>
+            <span className="text-business.accent">制作:</span>
             <Heart className="w-4 h-4 text-red-500 fill-current" />
-            <span>Osawaruのポートフォリオ</span>
-            <span className="mx-2">•</span>
-            <span>{new Date().getFullYear()}</span>
+            <span className="text-business.accent">Osawaruのポートフォリオ</span>
+            <span className="mx-2 text-business.accent">•</span>
+            <span className="text-business.accent">{new Date().getFullYear()}</span>
           </div>
           <div className="mt-4">
             <a href="https://github.com/hafljin" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">GitHub</a>

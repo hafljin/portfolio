@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 body {
-	background-color: #1A2421; /* business.base: 深緑に近い黒 */
-	color: #E6F0E6; /* business.light: やや緑がかった明るいグレー */
+	background-color: #22304A; /* business.base: 落ち着いた暗めの青 */
+	color: #E3E3E3; /* business.light: 柔らかい明るいグレー */
 }

@@ -35,7 +35,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
   };
 
   return (
-    <div className="bg-business.light rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
+    <div className="bg-business.navy rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
       {/* Project Image */}
       <div className="relative overflow-hidden">
         <img
@@ -49,11 +49,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
       {/* Content */}
       <div className="p-6">
         <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
-          <span className="text-business.navy">{project.title}</span>
+          <span className="text-business.accent">{project.title}</span>
         </h3>
         
         <p className="text-gray-600 mb-4 line-clamp-2">
-          <span className="text-business.navy">{project.description}</span>
+          <span className="text-business.light">{project.description}</span>
         </p>
 
         {/* Tech Stack */}
