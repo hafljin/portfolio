@@ -51,10 +51,10 @@ const Projects: React.FC = () => {
     <section className="py-20 bg-business.base text-business.light">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-business.light mb-4">
             <span className="text-business.accent">プロジェクト一覧</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-business.light/80 max-w-3xl mx-auto">
             <span className="text-business.light">AI・モバイル・ソフトウェア開発の最新事例をご紹介します。</span>
           </p>
         </div>
@@ -73,8 +73,8 @@ const Projects: React.FC = () => {
 
         {/* Mock Data Notice */}
         <div className="mt-16 text-center">
-          <div className="inline-block bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <p className="text-blue-800 text-sm">
+          <div className="inline-block bg-business.accent/10 border border-business.accent/30 rounded-lg p-4">
+            <p className="text-business.light text-sm">
               <strong>Developer Note:</strong> All project interactions (likes, comments) are stored locally only. 
               This is a static portfolio site with no backend integration.
             </p>

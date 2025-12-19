@@ -30,10 +30,10 @@ const About: React.FC = () => {
     <section className="py-20 bg-business.base text-business.light">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-business.light mb-4">
             <span className="text-business.light">私について</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-business.light/80 max-w-3xl mx-auto">
             <span className="text-business.light">AIを活用したアプリ開発や自動化を得意とします。<br />革新的で使いやすい体験を提供するアプリケーションの設計・実装に自信があります。</span>
           </p>
         </div>
@@ -46,10 +46,10 @@ const About: React.FC = () => {
               className="bg-business.navy rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300"
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 bg-blue-100 text-blue-600 rounded-lg">
-                  <div className="p-2 bg-business.accent text-business.light rounded-lg">{category.icon}</div>
+                <div className="p-2 bg-business.accent/20 rounded-lg">
+                  <div className="p-2 bg-business.accent text-white rounded-lg">{category.icon}</div>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900">
+                <h3 className="text-xl font-semibold text-business.light">
                   <span className="text-business.light">{category.title}</span>
                 </h3>
               </div>
@@ -57,7 +57,7 @@ const About: React.FC = () => {
                 {category.skills.map((skill, skillIndex) => (
                   <span
                     key={skillIndex}
-                    className="px-3 py-1 bg-business.base text-business.accent rounded-full text-sm font-medium hover:bg-business.accent hover:text-business.base transition-colors duration-200"
+                    className="px-3 py-1 bg-business.base text-business.accent rounded-full text-sm font-medium hover:bg-business.accent hover:text-white transition-colors duration-200"
                   >
                     {skill}
                   </span>
@@ -70,15 +70,15 @@ const About: React.FC = () => {
         {/* Stats */}
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-8">
           <div className="text-center">
-            <div className="text-4xl font-bold text-blue-600 mb-2">6+</div>
+            <div className="text-4xl font-bold text-business.accent mb-2">6+</div>
             <div className="text-business.light">注目プロジェクト</div>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold text-emerald-600 mb-2">3+</div>
+            <div className="text-4xl font-bold text-business.green mb-2">3+</div>
             <div className="text-business.light">経験年数</div>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold text-purple-600 mb-2">12+</div>
+            <div className="text-4xl font-bold text-business.accent mb-2">12+</div>
             <div className="text-business.light">技術スタック</div>
           </div>
         </div>

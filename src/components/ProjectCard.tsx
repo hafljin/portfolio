@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, MessageCircle, Github, ExternalLink, Code } from 'lucide-react';
+import { Heart, MessageCircle, Github, ExternalLink } from 'lucide-react';
 import { Project, Comment } from '../types';
 
 interface ProjectCardProps {
@@ -48,11 +48,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
 
       {/* Content */}
       <div className="p-6">
-        <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+        <h3 className="text-xl font-bold text-business.light mb-2 group-hover:text-business.accent transition-colors">
           <span className="text-business.accent">{project.title}</span>
         </h3>
         
-        <p className="text-gray-600 mb-4 line-clamp-2">
+        <p className="text-business.light/80 mb-4 line-clamp-2">
           <span className="text-business.light">{project.description}</span>
         </p>
 
@@ -61,14 +61,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
           {project.techStack.slice(0, 3).map((tech, index) => (
             <span
               key={index}
-              className="px-2 py-1 bg-business.base text-business.green rounded-md text-xs font-medium"
+              className="px-2 py-1 bg-business.base text-business.accent rounded-md text-xs font-medium"
             >
               {tech}
             </span>
           ))}
           {project.techStack.length > 3 && (
-            <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded-md text-xs font-medium">
-              <span className="text-business.green">+{project.techStack.length - 3}件以上</span>
+            <span className="px-2 py-1 bg-business.base/50 text-business.accent rounded-md text-xs font-medium">
+              <span className="text-business.accent">+{project.techStack.length - 3}件以上</span>
             </span>
           )}
         </div>
@@ -80,7 +80,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-2 bg-business.navy text-business.light rounded-lg hover:bg-business.base transition-colors text-sm font-medium"
+              className="flex items-center gap-2 px-3 py-2 bg-business.accent text-white rounded-lg hover:bg-business.accent/80 transition-colors text-sm font-medium"
             >
               <Github className="w-4 h-4" />
               コード
@@ -90,7 +90,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
                 href={project.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-3 py-2 bg-business.green text-business.light rounded-lg hover:bg-business.base transition-colors text-sm font-medium"
+                className="flex items-center gap-2 px-3 py-2 bg-business.green text-white rounded-lg hover:bg-business.green/80 transition-colors text-sm font-medium"
               >
                 <ExternalLink className="w-4 h-4" />
                 デモ
@@ -100,14 +100,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
         </div>
 
         {/* Interaction Buttons */}
-        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+        <div className="flex items-center justify-between pt-4 border-t border-business.base">
           <div className="flex items-center gap-4">
             <button
               onClick={handleLike}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
                 isLiked
-                  ? 'bg-business.base text-business.green'
-                  : 'bg-business.light text-business.navy hover:bg-business.base hover:text-business.green'
+                  ? 'bg-business.accent text-white'
+                  : 'bg-business.base text-business.accent hover:bg-business.accent hover:text-white'
               }`}
             >
               <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
@@ -116,7 +116,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
             
             <button
               onClick={() => setShowComments(!showComments)}
-              className="flex items-center gap-2 px-3 py-2 bg-business.light text-business.navy rounded-lg hover:bg-business.base hover:text-business.green transition-all"
+              className="flex items-center gap-2 px-3 py-2 bg-business.base text-business.accent rounded-lg hover:bg-business.accent hover:text-white transition-all"
             >
               <MessageCircle className="w-4 h-4" />
               <span className="text-sm font-medium">{project.comments.length}</span>
@@ -135,18 +135,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
                   placeholder="お名前"
                   value={newComment.author}
                   onChange={(e) => setNewComment({ ...newComment, author: e.target.value })}
-                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  className="px-3 py-2 border border-business.base rounded-lg focus:ring-2 focus:ring-business.accent focus:border-transparent text-sm text-business.light bg-business.navy"
                 />
                 <textarea
                   placeholder="コメントを追加..."
                   value={newComment.text}
                   onChange={(e) => setNewComment({ ...newComment, text: e.target.value })}
-                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm resize-none"
+                  className="px-3 py-2 border border-business.base rounded-lg focus:ring-2 focus:ring-business.accent focus:border-transparent text-sm resize-none text-business.light bg-business.navy"
                   rows={3}
                 />
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                  className="px-4 py-2 bg-business.accent text-white rounded-lg hover:bg-business.accent/80 transition-colors text-sm font-medium"
                 >
                   コメント投稿
                 </button>
@@ -157,14 +157,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
             {project.comments.length > 0 && (
               <div className="space-y-3">
                 {project.comments.map((comment) => (
-                  <div key={comment.id} className="bg-gray-50 rounded-lg p-3">
+                  <div key={comment.id} className="bg-business.base rounded-lg p-3">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="font-medium text-business.navy text-sm">{comment.author}</span>
-                      <span className="text-business.green text-xs">
+                      <span className="font-medium text-business.light text-sm">{comment.author}</span>
+                      <span className="text-business.accent text-xs">
                         {new Date(comment.timestamp).toLocaleDateString()}
                       </span>
                     </div>
-                    <p className="text-business.navy text-sm">{comment.text}</p>
+                    <p className="text-business.light/90 text-sm">{comment.text}</p>
                   </div>
                 ))}
               </div>
@@ -172,7 +172,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment })
 
             {/* Mock Data Warning Comment */}
             {project.comments.length === 0 && (
-              <p className="text-business.green text-sm italic text-center py-4">
+              <p className="text-business.accent text-sm italic text-center py-4">
                 コメントはまだありません。最初のコメントを投稿しませんか？
                 <span className="block text-xs mt-1">
                   （注意：コメントはローカル保存のみで永続化されません）
