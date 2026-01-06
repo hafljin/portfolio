@@ -1,4 +1,5 @@
 import { Project, Profile } from '../types';
+import avatarImage from '../assets/myphoto.png';
 
 // This is static mock data for display purposes only
 // No backend or API integration - all data is local
@@ -12,7 +13,7 @@ export const profile: Profile = {
     "Machine Learning", "AI/ML", "Node.js", "PostgreSQL",
     "Docker", "AWS", "Git", "TensorFlow"
   ],
-  avatarUrl: "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=400"
+  avatarUrl: avatarImage
 };
 
 // Mock project data - replace with real projects as needed
