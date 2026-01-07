@@ -14,6 +14,15 @@ export default {
           accent: '#5B8FA8', // 目に優しいブルーグレー（アクセント用）
         },
       },
+      animation: {
+        'bounce-subtle': 'bounce-subtle 2s infinite',
+      },
+      keyframes: {
+        'bounce-subtle': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+      },
     },
   },
   plugins: [],

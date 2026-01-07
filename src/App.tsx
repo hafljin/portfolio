@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Header from './components/Header';
 import About from './components/About';
 import Projects from './components/Projects';
-import Footer from './components/Footer';
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
@@ -11,7 +10,6 @@ function App() {
     { id: 'home', label: 'ホーム', component: <Header /> },
     { id: 'about', label: '私について', component: <About /> },
     { id: 'projects', label: 'プロジェクト', component: <Projects /> },
-    { id: 'contact', label: 'お問い合わせ', component: <Footer /> },
   ];
 
   return (
@@ -26,8 +24,8 @@ function App() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-4 py-2 rounded-lg text-sm sm:text-base font-medium transition-all duration-200 ${
                   activeTab === tab.id
-                    ? 'bg-business.accent text-white shadow-md'
-                    : 'text-business.light hover:bg-business.accent/20 hover:text-business.accent'
+                    ? 'bg-white text-gray-900 shadow-md border-2 border-business.accent'
+                    : 'text-gray-900 hover:bg-business.accent/20 hover:text-business.accent'
                 }`}
                 aria-label={tab.label}
               >

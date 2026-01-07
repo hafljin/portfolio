@@ -35,7 +35,7 @@ const About: React.FC = () => {
             <span className="text-business.light">私について</span>
           </h2>
           <p className="text-base sm:text-lg text-business.light/80 max-w-3xl mx-auto">
-            <span className="text-business.light">AIを活用したアプリ開発や自動化を得意とします。<br />革新的で使いやすい体験を提供するアプリケーションの設計・実装に自信があります。</span>
+            <span className="text-business.light">業界特化のLPやWEBサイト・WEB開発を得意とし、AI活用の自動化も可能です。<br />迅速で且つ、問題解決に寄与する実装に自信があります。</span>
           </p>
         </div>
 
@@ -48,7 +48,7 @@ const About: React.FC = () => {
             >
               <div className="flex items-center gap-2 sm:gap-3 mb-4">
                 <div className="p-1.5 sm:p-2 bg-business.accent/20 rounded-lg">
-                  <div className="p-1.5 sm:p-2 bg-business.accent text-white rounded-lg">{category.icon}</div>
+                  <div className="p-1.5 sm:p-2 bg-white text-business.accent rounded-lg">{category.icon}</div>
                 </div>
                 <h3 className="text-lg sm:text-xl font-semibold text-business.light">
                   <span className="text-business.light">{category.title}</span>
