@@ -4,34 +4,34 @@ import { profile } from '../data/mockData';
 
 const Header: React.FC = () => {
   return (
-    <header className="bg-business.blue text-business.light">
-      <div className="max-w-6xl mx-auto px-4 py-16 sm:py-24">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
+    <header className="bg-business.blue text-business.light h-full flex items-center overflow-hidden">
+      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-6 sm:py-8 lg:py-12">
+        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-4 sm:gap-6 lg:gap-8">
           {/* Avatar */}
           <div className="flex-shrink-0">
             <img
               src={profile.avatarUrl}
               alt={profile.name}
-              className="w-48 h-48 rounded-full border-4 border-business.accent/30 shadow-2xl object-cover"
+              className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-full border-4 border-business.accent/30 shadow-2xl object-cover"
             />
           </div>
           
           {/* Content */}
           <div className="flex-1 text-center lg:text-left">
-            <h1 className="text-4xl sm:text-6xl font-bold mb-4 bg-gradient-to-r from-business.accent to-business.green bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-5xl font-bold mb-2 bg-gradient-to-r from-business.accent to-business.green bg-clip-text text-transparent">
               <span className="text-business.accent">Osawaruのポートフォリオ</span>
             </h1>
-            <h2 className="text-xl sm:text-2xl text-business.accent mb-6 font-medium">
+            <h2 className="text-lg sm:text-xl text-business.accent mb-3 font-medium">
               <span className="text-business.accent">{profile.title}</span>
             </h2>
-            <p className="text-lg text-business.light/90 mb-8 leading-relaxed max-w-2xl">
+            <p className="text-base sm:text-lg text-business.light/90 mb-6 leading-relaxed max-w-2xl">
               <span className="text-business.light">{profile.bio}</span>
             </p>
             
             {/* Location */}
-            <div className="flex items-center justify-center lg:justify-start gap-2 mb-8">
-              <MapPin className="w-5 h-5 text-business.accent" />
-              <span className="text-business.light">{profile.location}</span>
+            <div className="flex items-center justify-center lg:justify-start gap-2 mb-6">
+              <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-business.accent" />
+              <span className="text-sm sm:text-base text-business.light">{profile.location}</span>
             </div>
             
             {/* Social Links */}

@@ -2,8 +2,9 @@ import React from 'react';
 import { Heart, Code2 } from 'lucide-react';
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-business.blue text-business.light py-12">
-      <div className="max-w-6xl mx-auto px-4">
+    <footer className="bg-business.blue text-business.light h-full flex items-center overflow-hidden">
+      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-6 sm:py-8">
+        <div className="max-w-6xl mx-auto w-full">
         <div className="text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Code2 className="w-6 h-6 text-business.accent" />
@@ -24,6 +25,7 @@ const Footer: React.FC = () => {
             <span className="mx-2">•</span>
             <a href="mailto:moneypro@gmail.com" className="underline hover:text-business.accent text-business.accent">お問い合わせ</a>
           </div>
+        </div>
         </div>
       </div>
     </footer>

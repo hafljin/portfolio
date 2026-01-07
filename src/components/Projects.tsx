@@ -3,7 +3,7 @@ import { projects as initialProjects } from '../data/mockData';
 import { Project, Comment } from '../types';
 import ProjectCard from './ProjectCard';
 
-const LOCAL_STORAGE_KEY = 'portfolio_projects_v1';
+const LOCAL_STORAGE_KEY = 'portfolio_projects_v2';
 
 const Projects: React.FC = () => {
   // localStorageから初期値を取得
@@ -48,19 +48,20 @@ const Projects: React.FC = () => {
   };
 
   return (
-    <section className="py-20 bg-business.base text-business.light">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-business.light mb-4">
+    <section className="bg-business.base text-business.light h-full flex items-center overflow-hidden">
+      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-4 sm:py-6 lg:py-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-4 sm:mb-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-business.light mb-2 sm:mb-3">
             <span className="text-business.accent">プロジェクト一覧</span>
           </h2>
-          <p className="text-xl text-business.light/80 max-w-3xl mx-auto">
-            <span className="text-business.light">AI・モバイル・ソフトウェア開発の最新事例をご紹介します。</span>
+          <p className="text-base sm:text-lg text-business.light/80 max-w-3xl mx-auto">
+            <span className="text-business.light">開発の事例をご紹介します。</span>
           </p>
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
           {projects.map((project) => (
             <ProjectCard
               key={project.id}
@@ -70,15 +71,6 @@ const Projects: React.FC = () => {
             />
           ))}
         </div>
-
-        {/* Mock Data Notice */}
-        <div className="mt-16 text-center">
-          <div className="inline-block bg-business.accent/10 border border-business.accent/30 rounded-lg p-4">
-            <p className="text-business.light text-sm">
-              <strong>Developer Note:</strong> All project interactions (likes, comments) are stored locally only. 
-              This is a static portfolio site with no backend integration.
-            </p>
-          </div>
         </div>
       </div>
     </section>

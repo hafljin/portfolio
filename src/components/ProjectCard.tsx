@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Heart, MessageCircle, Github, ExternalLink } from 'lucide-react';
+import React from 'react';
+import { Github, ExternalLink } from 'lucide-react';
 import { Project, Comment } from '../types';
 
 interface ProjectCardProps {
@@ -8,179 +8,69 @@ interface ProjectCardProps {
   onComment: (projectId: string, comment: Omit<Comment, 'id' | 'timestamp'>) => void;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike, onComment }) => {
-  const LIKE_KEY = `portfolio_like_${project.id}`;
-  const [showComments, setShowComments] = useState(false);
-  const [newComment, setNewComment] = useState({ author: '', text: '' });
-  const [isLiked, setIsLiked] = useState(false);
-
-  useEffect(() => {
-    const liked = localStorage.getItem(LIKE_KEY) === '1';
-    setIsLiked(liked);
-  }, [LIKE_KEY]);
-
-  const handleLike = () => {
-    const nextLiked = !isLiked;
-    setIsLiked(nextLiked);
-    localStorage.setItem(LIKE_KEY, nextLiked ? '1' : '0');
-    onLike(project.id, nextLiked);
-  };
-
-  const handleSubmitComment = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newComment.author.trim() && newComment.text.trim()) {
-      onComment(project.id, newComment);
-      setNewComment({ author: '', text: '' });
-    }
-  };
+const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
   return (
-    <div className="bg-business.navy rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
+    <div className="bg-business.navy rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group h-full flex flex-col">
       {/* Project Image */}
       <div className="relative overflow-hidden">
         <img
           src={project.imageUrl}
           alt={project.title}
-          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-24 sm:h-28 object-cover group-hover:scale-105 transition-transform duration-300"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
       {/* Content */}
-      <div className="p-6">
-        <h3 className="text-xl font-bold text-business.light mb-2 group-hover:text-business.accent transition-colors">
-          <span className="text-business.accent">{project.title}</span>
+      <div className="p-3 sm:p-4 flex-1 flex flex-col">
+        <h3 className="text-sm sm:text-base font-bold text-business.accent mb-1.5 line-clamp-1">
+          {project.title}
         </h3>
         
-        <p className="text-business.light/80 mb-4 line-clamp-2">
-          <span className="text-business.light">{project.description}</span>
+        <p className="text-xs sm:text-sm text-business.light/80 mb-2 sm:mb-3 line-clamp-2 flex-1">
+          {project.description}
         </p>
 
         {/* Tech Stack */}
-        <div className="flex flex-wrap gap-2 mb-6">
-          {project.techStack.slice(0, 3).map((tech, index) => (
+        <div className="flex flex-wrap gap-1 mb-2 sm:mb-3">
+          {project.techStack.slice(0, 2).map((tech, index) => (
             <span
               key={index}
-              className="px-2 py-1 bg-business.base text-business.accent rounded-md text-xs font-medium"
+              className="px-1.5 py-0.5 bg-business.base text-business.accent rounded text-xs font-medium"
             >
               {tech}
             </span>
           ))}
-          {project.techStack.length > 3 && (
-            <span className="px-2 py-1 bg-business.base/50 text-business.accent rounded-md text-xs font-medium">
-              <span className="text-business.accent">+{project.techStack.length - 3}件以上</span>
+          {project.techStack.length > 2 && (
+            <span className="px-1.5 py-0.5 bg-business.base/50 text-business.accent rounded text-xs font-medium">
+              +{project.techStack.length - 2}
             </span>
           )}
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex gap-3">
+        <div className="flex gap-1.5 sm:gap-2 mt-auto">
+          <a
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-1 px-2 py-1.5 bg-business.accent text-white rounded hover:bg-business.accent/80 transition-colors text-xs font-medium flex-1"
+          >
+            <Github className="w-3 h-3" />
+            <span className="hidden sm:inline">コード</span>
+          </a>
+          {project.demoUrl && (
             <a
-              href={project.githubUrl}
+              href={project.demoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-2 bg-business.accent text-white rounded-lg hover:bg-business.accent/80 transition-colors text-sm font-medium"
+              className="flex items-center justify-center gap-1 px-2 py-1.5 bg-business.green text-white rounded hover:bg-business.green/80 transition-colors text-xs font-medium flex-1"
             >
-              <Github className="w-4 h-4" />
-              コード
+              <ExternalLink className="w-3 h-3" />
+              <span className="hidden sm:inline">デモ</span>
             </a>
-            {project.demoUrl && (
-              <a
-                href={project.demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-3 py-2 bg-business.green text-white rounded-lg hover:bg-business.green/80 transition-colors text-sm font-medium"
-              >
-                <ExternalLink className="w-4 h-4" />
-                デモ
-              </a>
-            )}
-          </div>
+          )}
         </div>
-
-        {/* Interaction Buttons */}
-        <div className="flex items-center justify-between pt-4 border-t border-business.base">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={handleLike}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
-                isLiked
-                  ? 'bg-business.accent text-white'
-                  : 'bg-business.base text-business.accent hover:bg-business.accent hover:text-white'
-              }`}
-            >
-              <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
-              <span className="text-sm font-medium">{project.likes}</span>
-            </button>
-            
-            <button
-              onClick={() => setShowComments(!showComments)}
-              className="flex items-center gap-2 px-3 py-2 bg-business.base text-business.accent rounded-lg hover:bg-business.accent hover:text-white transition-all"
-            >
-              <MessageCircle className="w-4 h-4" />
-              <span className="text-sm font-medium">{project.comments.length}</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Comments Section */}
-        {showComments && (
-          <div className="mt-6 pt-6 border-t border-gray-100">
-            {/* Comment Form */}
-            <form onSubmit={handleSubmitComment} className="mb-4">
-              <div className="grid grid-cols-1 gap-3">
-                <input
-                  type="text"
-                  placeholder="お名前"
-                  value={newComment.author}
-                  onChange={(e) => setNewComment({ ...newComment, author: e.target.value })}
-                  className="px-3 py-2 border border-business.base rounded-lg focus:ring-2 focus:ring-business.accent focus:border-transparent text-sm text-business.light bg-business.navy"
-                />
-                <textarea
-                  placeholder="コメントを追加..."
-                  value={newComment.text}
-                  onChange={(e) => setNewComment({ ...newComment, text: e.target.value })}
-                  className="px-3 py-2 border border-business.base rounded-lg focus:ring-2 focus:ring-business.accent focus:border-transparent text-sm resize-none text-business.light bg-business.navy"
-                  rows={3}
-                />
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-business.accent text-white rounded-lg hover:bg-business.accent/80 transition-colors text-sm font-medium"
-                >
-                  コメント投稿
-                </button>
-              </div>
-            </form>
-
-            {/* Comments List */}
-            {project.comments.length > 0 && (
-              <div className="space-y-3">
-                {project.comments.map((comment) => (
-                  <div key={comment.id} className="bg-business.base rounded-lg p-3">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="font-medium text-business.light text-sm">{comment.author}</span>
-                      <span className="text-business.accent text-xs">
-                        {new Date(comment.timestamp).toLocaleDateString()}
-                      </span>
-                    </div>
-                    <p className="text-business.light/90 text-sm">{comment.text}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Mock Data Warning Comment */}
-            {project.comments.length === 0 && (
-              <p className="text-business.accent text-sm italic text-center py-4">
-                コメントはまだありません。最初のコメントを投稿しませんか？
-                <span className="block text-xs mt-1">
-                  （注意：コメントはローカル保存のみで永続化されません）
-                </span>
-              </p>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );

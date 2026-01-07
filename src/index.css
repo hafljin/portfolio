@@ -3,6 +3,35 @@
 @tailwind utilities;
 
 body {
-	background-color: #DCE0E5; /* business.base: 目に優しい暗めのグレー（背景） */
+	background-color: #C8CDD3; /* business.base: 目に優しい暗めのグレー（背景） */
 	color: #2C3E50; /* business.light: 目に優しいダークグレー（テキスト用） */
+}
+
+/* 右矢印ボタンのパルスアニメーション */
+@keyframes pulse-arrow {
+	0%, 100% {
+		transform: translateX(0);
+		opacity: 1;
+	}
+	50% {
+		transform: translateX(-8px);
+		opacity: 0.8;
+	}
+}
+
+@keyframes bounce-subtle {
+	0%, 100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-4px);
+	}
+}
+
+.animate-pulse-arrow {
+	animation: pulse-arrow 2s ease-in-out infinite;
+}
+
+.animate-bounce-subtle {
+	animation: bounce-subtle 1.5s ease-in-out infinite;
 }
