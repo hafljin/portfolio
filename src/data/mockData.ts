@@ -5,13 +5,14 @@ import avatarImage from '../assets/myphoto.png';
 // No backend or API integration - all data is local
 export const profile: Profile = {
   name: "Osawaru",
-  title: "スピード重視で問題解決を行うAIエンジニア",
+  title: "スピード重視で問題解決を行うエンジニア",
   bio: "スピードと品質を両立したLP制作やWEB開発を得意とします。迅速な納品と効果的なデザインで、お客様のビジネス成長をサポートします。",
   location: "Tokyo, Japan",
   skills: [
     "Kotlin", "React", "TypeScript", "Python", 
-    "Machine Learning", "AI/ML", "Node.js", "PostgreSQL",
-    "Docker", "AWS", "Git", "TensorFlow"
+    "AI自動化", "ChatGPT API", "業務効率化", 
+    "Node.js", "PostgreSQL",
+    "Docker", "AWS", "Git"
   ],
   avatarUrl: avatarImage
 };
@@ -27,7 +28,7 @@ export const projects: Project[] = [
     techStack: ["React", "TypeScript", "Tailwind CSS"],
     githubUrl: "https://github.com/hafljin/CalculatorApp_ai_challenge",
     demoUrl: "https://salonlp.vercel.app/",
-    imageUrl: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=800",
+    imageUrl: "https://images.pexels.com/photos/1319460/pexels-photo-1319460.jpeg?auto=compress&cs=tinysrgb&w=800",
     likes: 0,
     comments: []
   },
@@ -39,7 +40,7 @@ export const projects: Project[] = [
     techStack: ["React", "TypeScript", "Tailwind CSS"],
     githubUrl: "https://github.com/hafljin/NoteBook_ai_challenge",
     demoUrl: "https://yakitori-swipe-story.vercel.app/",
-    imageUrl: "https://images.pexels.com/photos/5905709/pexels-photo-5905709.jpeg?auto=compress&cs=tinysrgb&w=800",
+    imageUrl: "https://images.pexels.com/photos/1633525/pexels-photo-1633525.jpeg?auto=compress&cs=tinysrgb&w=800",
     likes: 0,
     comments: []
   },
@@ -51,7 +52,7 @@ export const projects: Project[] = [
     techStack: ["React", "TypeScript", "Tailwind CSS"],
     githubUrl: "https://github.com/hafljin/tmeFlex_ai_challenge",
     demoUrl: "https://mobile-developers-road.vercel.app/",
-    imageUrl: "https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=800",
+    imageUrl: "https://images.pexels.com/photos/4974915/pexels-photo-4974915.jpeg?auto=compress&cs=tinysrgb&w=800",
     likes: 0,
     comments: []
   },
@@ -63,7 +64,7 @@ export const projects: Project[] = [
     techStack: ["React", "TypeScript", "Tailwind CSS"],
     githubUrl: "https://github.com/hafljin/todoapp_ai_challenge",
     demoUrl: "https://fortune-food.vercel.app/",
-    imageUrl: "https://images.pexels.com/photos/3183156/pexels-photo-3183156.jpeg?auto=compress&cs=tinysrgb&w=800",
+    imageUrl: "https://images.pexels.com/photos/998641/pexels-photo-998641.jpeg?auto=compress&cs=tinysrgb&w=800",
     likes: 0,
     comments: []
   },
@@ -75,7 +76,7 @@ export const projects: Project[] = [
     techStack: ["React", "TypeScript", "Tailwind CSS"],
     githubUrl: "https://github.com/hafljin/deep-focusing",
     demoUrl: "https://ai-fullstack-lab.vercel.app/#/",
-    imageUrl: "https://images.pexels.com/photos/3183159/pexels-photo-3183159.jpeg?auto=compress&cs=tinysrgb&w=800",
+    imageUrl: "https://images.pexels.com/photos/574077/pexels-photo-574077.jpeg?auto=compress&cs=tinysrgb&w=800",
     likes: 0,
     comments: []
   }

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import Header from './components/Header';
 import About from './components/About';
 import Projects from './components/Projects';
@@ -19,7 +20,7 @@ function App() {
         <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center gap-2 sm:gap-4 py-3 sm:py-4">
             {tabs.map((tab) => (
-              <button
+              <motion.button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-4 py-2 rounded-lg text-sm sm:text-base font-medium transition-all duration-200 ${
@@ -28,24 +29,34 @@ function App() {
                     : 'text-gray-900 hover:bg-business.accent/20 hover:text-business.accent'
                 }`}
                 aria-label={tab.label}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 {tab.label}
-              </button>
+              </motion.button>
             ))}
           </div>
         </div>
       </nav>
 
       {/* コンテンツエリア */}
-      <div className="flex-1 overflow-hidden">
-        {tabs.map((tab) => (
-          <div
-            key={tab.id}
-            className={`h-full ${activeTab === tab.id ? 'block' : 'hidden'}`}
-          >
-            {tab.component}
-          </div>
-        ))}
+      <div className="flex-1 overflow-hidden relative">
+        <AnimatePresence mode="wait">
+          {tabs.map((tab) => (
+            activeTab === tab.id && (
+              <motion.div
+                key={tab.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                className="h-full absolute inset-0"
+              >
+                {tab.component}
+              </motion.div>
+            )
+          ))}
+        </AnimatePresence>
       </div>
     </div>
   );

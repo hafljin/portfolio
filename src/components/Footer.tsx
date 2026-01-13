@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
           <div className="mt-4">
             <a href="https://github.com/hafljin" target="_blank" rel="noopener noreferrer" className="underline hover:text-business.accent text-business.accent">GitHub</a>
             <span className="mx-2">•</span>
-            <a href="mailto:mitsuru.donrichy@gmail.com" className="underline hover:text-business.accent text-business.accent">お問い合わせ</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeYMecg-82GLXNKDyDIWxCIUalRRseSTT8vLRQ5lsuNL9C6-A/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" className="underline hover:text-business.accent text-business.accent">お問い合わせ</a>
           </div>
         </div>
         </div>

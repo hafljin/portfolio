@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Heart, ExternalLink } from 'lucide-react';
 import { Project, Comment } from '../types';
 
@@ -25,13 +26,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike }) => {
   };
 
   return (
-    <div className="bg-business.navy rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group h-full flex flex-col">
+    <motion.div 
+      className="bg-business.navy rounded-lg shadow-md overflow-hidden group h-full flex flex-col"
+      whileHover={{ y: -5, shadow: '0 10px 25px rgba(0,0,0,0.15)' }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
+    >
       {/* Project Image */}
       <div className="relative overflow-hidden">
-        <img
+        <motion.img
           src={project.imageUrl}
           alt={project.title}
-          className="w-full h-24 sm:h-28 object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-24 sm:h-28 object-cover"
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.3 }}
         />
       </div>
 
@@ -64,31 +71,42 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike }) => {
 
         {/* Action Buttons */}
         <div className="flex gap-1.5 sm:gap-2 mt-auto">
-          <button
+          <motion.button
             onClick={handleLike}
-            className={`flex items-center justify-center gap-1 px-2 py-1.5 rounded transition-all text-xs font-medium flex-1 ${
+            className={`flex items-center justify-center gap-1 px-2 py-1.5 rounded text-xs font-medium flex-1 ${
               isLiked
                 ? 'bg-business.accent text-gray-900'
-                : 'bg-business.base text-business.accent hover:bg-business.accent hover:text-gray-900 border border-business.accent'
+                : 'bg-business.base text-business.accent border border-business.accent'
             }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
           >
-            <Heart className={`w-3 h-3 ${isLiked ? 'fill-current' : ''}`} />
+            <motion.div
+              animate={isLiked ? { scale: [1, 1.2, 1] } : {}}
+              transition={{ duration: 0.3 }}
+            >
+              <Heart className={`w-3 h-3 ${isLiked ? 'fill-current' : ''}`} />
+            </motion.div>
             <span className="hidden sm:inline">{project.likes}</span>
-          </button>
+          </motion.button>
           {project.demoUrl && (
-            <a
+            <motion.a
               href={project.demoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1 px-2 py-1.5 bg-white text-business.green rounded hover:bg-business.green hover:text-gray-900 border border-business.green transition-colors text-xs font-medium flex-1"
+              className="flex items-center justify-center gap-1 px-2 py-1.5 bg-white text-business.green rounded border border-business.green text-xs font-medium flex-1"
+              whileHover={{ scale: 1.05, backgroundColor: '#4A90A4', color: 'white' }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
             >
               <ExternalLink className="w-3 h-3" />
               <span className="hidden sm:inline">デモ</span>
-            </a>
+            </motion.a>
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
