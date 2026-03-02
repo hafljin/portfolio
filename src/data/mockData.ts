@@ -79,5 +79,16 @@ export const projects: Project[] = [
     imageUrl: "https://images.pexels.com/photos/574077/pexels-photo-574077.jpeg?auto=compress&cs=tinysrgb&w=800",
     likes: 0,
     comments: []
+  },
+  {
+    id: "6",
+    title: "コーディングブートキャンプ",
+    description: "プログラミング学習のためのブートキャンプリポジトリ",
+    longDescription: "プログラミング学習のためのブートキャンプリポジトリ。コーディングスキルの向上を目指す学習コンテンツを提供しています。",
+    techStack: ["Programming", "Education"],
+    githubUrl: "https://github.com/hafljin/codingbootcamp",
+    imageUrl: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+    likes: 0,
+    comments: []
   }
 ];
