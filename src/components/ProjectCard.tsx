@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Heart, ExternalLink } from 'lucide-react';
 import { Project, Comment } from '../types';
@@ -27,7 +28,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike }) => {
 
   return (
     <motion.div 
-      className="bg-business.navy rounded-lg shadow-md overflow-hidden group h-full flex flex-col"
+      className="bg-business.navy rounded-lg shadow-md border border-slate-200 overflow-hidden group h-full flex flex-col"
       whileHover={{ y: -5, shadow: '0 10px 25px rgba(0,0,0,0.15)' }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
     >
@@ -75,7 +76,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike }) => {
             onClick={handleLike}
             className={`flex items-center justify-center gap-1 px-2 py-1.5 rounded text-xs font-medium flex-1 ${
               isLiked
-                ? 'bg-business.accent text-gray-900'
+                ? 'bg-business.accent text-white'
                 : 'bg-business.base text-business.accent border border-business.accent'
             }`}
             whileHover={{ scale: 1.05 }}
@@ -91,18 +92,30 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike }) => {
             <span className="hidden sm:inline">{project.likes}</span>
           </motion.button>
           {project.demoUrl && (
-            <motion.a
-              href={project.demoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1 px-2 py-1.5 bg-white text-business.green rounded border border-business.green text-xs font-medium flex-1"
-              whileHover={{ scale: 1.05, backgroundColor: '#4A90A4', color: 'white' }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-            >
-              <ExternalLink className="w-3 h-3" />
-              <span className="hidden sm:inline">デモ</span>
-            </motion.a>
+            project.demoUrl.startsWith('/') ? (
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link
+                  to={project.demoUrl}
+                  className="flex items-center justify-center gap-1 px-2 py-1.5 bg-white text-business.green rounded border border-business.green text-xs font-medium flex-1 hover:bg-business.green hover:text-white transition-colors"
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  <span className="hidden sm:inline">デモ</span>
+                </Link>
+              </motion.div>
+            ) : (
+              <motion.a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-1 px-2 py-1.5 bg-white text-business.green rounded border border-business.green text-xs font-medium flex-1 hover:bg-business.green hover:text-white transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+              >
+                <ExternalLink className="w-3 h-3" />
+                <span className="hidden sm:inline">デモ</span>
+              </motion.a>
+            )
           )}
         </div>
       </div>

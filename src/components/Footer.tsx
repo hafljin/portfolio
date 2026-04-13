@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
             <span className="text-xl font-bold text-business.accent">Osawaruのポートフォリオ</span>
           </div>
           <p className="text-business.light/80 mb-6">
-            <span className="text-business.light">AIと革新的なソフトウェアで未来を創る</span>
+            <span className="text-business.light">お店・会社のWeb制作、業務効率化でお手伝いします</span>
           </p>
           <div className="flex items-center justify-center gap-2 text-sm text-business.light/70">
             <span className="text-business.accent">制作:</span>

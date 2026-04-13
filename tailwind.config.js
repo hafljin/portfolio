@@ -1,17 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  safelist: [
+    'bg-rose-500', 'bg-emerald-600', 'bg-stone-600', 'bg-indigo-600', 'bg-amber-500', 'bg-teal-600', 'bg-slate-700',
+    'bg-rose-500/10', 'bg-emerald-600/10', 'bg-stone-600/10', 'bg-indigo-600/10', 'bg-amber-500/10', 'bg-teal-600/10', 'bg-slate-700/10',
+    'text-rose-600', 'text-emerald-600', 'text-stone-600', 'text-indigo-600', 'text-amber-600', 'text-teal-600', 'text-slate-700',
+    'hover:bg-rose-600', 'hover:bg-emerald-700', 'hover:bg-stone-700', 'hover:bg-indigo-700', 'hover:bg-amber-600', 'hover:bg-teal-700', 'hover:bg-slate-800'
+  ],
   darkMode: 'media',
   theme: {
     extend: {
       colors: {
         business: {
-          light: '#2C3E50', // 目に優しいダークグレー（テキスト用）
-          base: '#C8CDD3', // 目に優しい暗めのグレー（背景用）
-          blue: '#C0C5CC', // 目に優しい暗めのブルーグレー（背景用）
-          navy: '#D1D5DB', // 目に優しい暗めのオフホワイト（カード背景用）
-          green: '#4A90A4', // ソフトなティールグリーン（アクセント用）
-          accent: '#5B8FA8', // 目に優しいブルーグレー（アクセント用）
+          light: '#1e293b', // 信頼感のあるダークスレート（テキスト）
+          base: '#f1f5f9', // やわらかいライトグレー（メイン背景）
+          blue: '#e2e8f0', // 薄いスレート（セクション背景）
+          navy: '#ffffff', // 白（カード・パネル背景）
+          green: '#047857', // 落ち着いたエメラルド（CTA・信頼）
+          accent: '#1e40af', // ネイビーブルー（メインアクセント・信頼）
         },
       },
       animation: {

@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 body {
-	background-color: #C8CDD3; /* business.base: 目に優しい暗めのグレー（背景） */
-	color: #2C3E50; /* business.light: 目に優しいダークグレー（テキスト用） */
+	background-color: #f1f5f9; /* business.base: やわらかいライトグレー */
+	color: #1e293b; /* business.light: 信頼感のあるダークスレート */
 }
 
 /* 右矢印ボタンのパルスアニメーション */

@@ -11,6 +11,14 @@ export interface Project {
   videoUrl?: string;
   likes: number; // Mock data - stored locally only
   comments: Comment[]; // Mock data - not persisted
+  category?: string;
+}
+
+export interface ProjectCategory {
+  id: string;
+  title: string;
+  description: string;
+  projects: Project[];
 }
 
 export interface Comment {
@@ -27,4 +35,17 @@ export interface Profile {
   location: string;
   skills: string[];
   avatarUrl: string;
+}
+
+export interface Service {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export interface PricingPlan {
+  id: string;
+  service: string;
+  priceRange: string;
+  note: string;
 }
