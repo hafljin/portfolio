@@ -116,7 +116,7 @@ const Intro: React.FC<IntroProps> = ({ onNavigateTo }) => {
                     <Github className="w-6 h-6" />
                   </motion.a>
                   <motion.a
-                    href="https://linkedin.com/in/osawaru"
+                    href="https://linkedin.com/in/mic-nem-468b79312"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 bg-business.accent/20 hover:bg-business.accent/30 rounded-full transition-all duration-200 text-business.accent"
