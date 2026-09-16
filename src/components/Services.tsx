@@ -1,9 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Layout, Globe, Code2, Zap } from 'lucide-react';
+import { Sparkles, Layout, Workflow } from 'lucide-react';
 import { services } from '../data/mockData';
 
-const serviceIcons = [Layout, Globe, Code2, Zap];
+const serviceIcons = [Sparkles, Workflow, Layout];
 
 interface ServicesProps {
   onNavigateTo?: (tabId: string) => void;
@@ -11,63 +11,51 @@ interface ServicesProps {
 
 const Services: React.FC<ServicesProps> = ({ onNavigateTo }) => {
   return (
-    <section className="bg-business.base text-business.light h-full overflow-y-auto py-6" aria-labelledby="services-heading">
-      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-4 sm:py-6 lg:py-8">
+    <section className="bg-[#f6f3ed] text-[#252525] h-full overflow-y-auto py-8 sm:py-12" aria-labelledby="services-heading">
+      <div className="w-full mx-auto px-5 sm:px-8 lg:px-12 py-4 sm:py-6">
         <div className="max-w-6xl mx-auto">
           <motion.div
-            className="text-center mb-6 sm:mb-8"
+            className="text-center mb-10 sm:mb-14"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 id="services-heading" className="text-2xl sm:text-3xl font-bold text-business.accent mb-2 sm:mb-3">
-              作れるもの
+            <p className="font-display text-[10px] tracking-[0.28em] text-[#9a7d45] mb-3">WHAT I BUILD</p>
+            <h2 id="services-heading" className="font-display text-3xl sm:text-5xl font-semibold text-[#252525] mb-3">
+              提供できること
             </h2>
-            <p className="text-base sm:text-lg text-business.light/80 max-w-3xl mx-auto">
-              お店の集客ページ、ホームページ、業務の効率化まで。ご要望に合わせてご対応します。
+            <p className="text-sm sm:text-base text-stone-600 max-w-2xl mx-auto leading-7">
+              ホームページ・LP制作と、AIを活用した業務効率化ツールの制作を承ります。
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 border-t border-[#b5965a]/35">
             {services.map((service, index) => {
               const Icon = serviceIcons[index % serviceIcons.length];
               return (
                 <motion.div
                   key={service.id}
-                  className="bg-business.navy rounded-xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-shadow"
+                  className={`h-full bg-transparent p-6 sm:p-8 transition-colors hover:bg-[#eee8dc]/65 ${index !== 0 ? 'md:border-l border-[#b5965a]/35' : ''}`}
                   initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  whileHover={{ y: -4 }}
+                  transition={{ duration: 0.5, delay: index * 0.08 }}
                 >
                   <div className="flex items-start gap-3 mb-3">
-                    <div className="p-2 bg-business.accent/20 rounded-lg flex-shrink-0">
-                      <Icon className="w-6 h-6 text-business.accent" />
+                    <div className="p-2 border border-[#b5965a]/45 rounded-full flex-shrink-0">
+                      <Icon className="w-5 h-5 text-[#876d3e]" />
                     </div>
                     <div>
-                      <h3 className="text-lg sm:text-xl font-semibold text-business.light">
+                      <p className="text-[10px] tracking-[0.18em] text-[#9a7d45] mb-2">0{index + 1}</p>
+                      <h3 className="font-display text-xl sm:text-2xl font-semibold text-[#252525]">
                         {service.title}
                       </h3>
-                      <p className="text-sm sm:text-base text-business.light/80 leading-relaxed mt-1">
+                      <p className="text-sm sm:text-base text-stone-600 leading-7 mt-3">
                         {service.description}
                       </p>
                     </div>
                   </div>
-                  {onNavigateTo && (
-                    <div className="flex gap-2 mt-4">
-                      <button
-                        onClick={() => onNavigateTo('sample')}
-                        className="px-3 py-1.5 text-sm bg-business.base text-business.accent rounded-lg font-medium hover:bg-business.accent/20 transition-colors"
-                      >
-                        サンプルを見る
-                      </button>
-                      <button
-                        onClick={() => onNavigateTo('pricing')}
-                        className="px-3 py-1.5 text-sm bg-business.accent text-white rounded-lg font-medium hover:bg-business.accent/90 transition-colors"
-                      >
-                        料金・お問い合わせ
-                      </button>
-                    </div>
-                  )}
                 </motion.div>
               );
             })}
@@ -75,16 +63,22 @@ const Services: React.FC<ServicesProps> = ({ onNavigateTo }) => {
 
           {onNavigateTo && (
             <motion.div
-              className="text-center mt-8"
+              className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-10"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
             >
               <button
-                onClick={() => onNavigateTo('contact')}
-                className="px-6 py-3 bg-business.green text-white rounded-lg font-medium hover:bg-business.green/90 transition-colors"
+                onClick={() => onNavigateTo('sample')}
+                className="px-6 py-3 border border-[#8d7343] text-[#5d4a29] rounded-sm font-medium hover:bg-[#eae2d3] transition-colors"
               >
-                お気軽にご相談ください
+                サンプルを見る
+              </button>
+              <button
+                onClick={() => onNavigateTo('pricing')}
+                className="px-6 py-3 bg-[#252525] text-white rounded-sm font-medium hover:bg-[#45433e] transition-colors"
+              >
+                料金・お問い合わせ
               </button>
             </motion.div>
           )}

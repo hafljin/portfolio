@@ -3,8 +3,63 @@
 @tailwind utilities;
 
 body {
-	background-color: #f1f5f9; /* business.base: やわらかいライトグレー */
-	color: #1e293b; /* business.light: 信頼感のあるダークスレート */
+	margin: 0;
+	background-color: #f6f3ed;
+	color: #252525;
+	font-family: "Helvetica Neue", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+.font-display {
+	font-family: "Iowan Old Style", "Baskerville", "Yu Mincho", "Hiragino Mincho ProN", serif;
+	letter-spacing: 0.04em;
+}
+
+.hero-grid {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	opacity: 0.45;
+	background-image: linear-gradient(rgba(131, 108, 65, 0.075) 1px, transparent 1px), linear-gradient(90deg, rgba(131, 108, 65, 0.075) 1px, transparent 1px);
+	background-size: 72px 72px;
+	mask-image: linear-gradient(to bottom, black, transparent 78%);
+}
+
+.hero-orb {
+	position: absolute;
+	z-index: -1;
+	border-radius: 9999px;
+	filter: blur(1px);
+	pointer-events: none;
+}
+
+.hero-orb-one {
+	width: min(56vw, 720px);
+	height: min(56vw, 720px);
+	top: -38%;
+	right: -13%;
+	background: radial-gradient(circle at 35% 35%, rgba(218, 190, 130, 0.38), rgba(218, 190, 130, 0.06) 58%, transparent 72%);
+}
+
+.hero-orb-two {
+	width: min(48vw, 600px);
+	height: min(48vw, 600px);
+	bottom: -48%;
+	left: -14%;
+	background: radial-gradient(circle at 60% 35%, rgba(159, 179, 160, 0.25), rgba(159, 179, 160, 0.04) 56%, transparent 72%);
+}
+
+@media (max-height: 760px) {
+	.top-intro-shell {
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+	}
+
+	.top-avatar,
+	.top-social {
+		display: none;
+	}
 }
 
 /* 右矢印ボタンのパルスアニメーション */

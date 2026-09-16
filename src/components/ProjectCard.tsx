@@ -1,105 +1,87 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, ExternalLink } from 'lucide-react';
-import { Project, Comment } from '../types';
+import { ExternalLink } from 'lucide-react';
+import { Project } from '../types';
 
 interface ProjectCardProps {
   project: Project;
-  onLike: (projectId: string, liked: boolean) => void;
-  onComment: (projectId: string, comment: Omit<Comment, 'id' | 'timestamp'>) => void;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike }) => {
-  const LIKE_KEY = `portfolio_like_${project.id}`;
-  const [isLiked, setIsLiked] = useState(false);
-
-  useEffect(() => {
-    const liked = localStorage.getItem(LIKE_KEY) === '1';
-    setIsLiked(liked);
-  }, [LIKE_KEY]);
-
-  const handleLike = () => {
-    const nextLiked = !isLiked;
-    setIsLiked(nextLiked);
-    localStorage.setItem(LIKE_KEY, nextLiked ? '1' : '0');
-    onLike(project.id, nextLiked);
-  };
-
+const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
     <motion.div 
-      className="bg-business.navy rounded-lg shadow-md border border-slate-200 overflow-hidden group h-full flex flex-col"
-      whileHover={{ y: -5, shadow: '0 10px 25px rgba(0,0,0,0.15)' }}
+      className="bg-[#fbfaf7] border border-[#b5965a]/35 overflow-hidden group h-full flex flex-col"
+      whileHover={{ y: -5, boxShadow: '0 18px 36px rgba(64, 52, 30, 0.14)' }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
     >
       {/* Project Image */}
       <div className="relative overflow-hidden">
-        <motion.img
-          src={project.imageUrl}
-          alt={project.title}
-          className="w-full h-24 sm:h-28 object-cover"
-          whileHover={{ scale: 1.1 }}
-          transition={{ duration: 0.3 }}
-        />
+        {project.videoUrl ? (
+          <video
+            src={project.videoUrl}
+            poster={project.imageUrl}
+            className="h-24 w-full object-cover sm:h-28"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        ) : (
+          <motion.img
+            src={project.imageUrl}
+            alt={project.title}
+            className="w-full h-44 sm:h-52 object-cover"
+            whileHover={{ scale: 1.06 }}
+            transition={{ duration: 0.5 }}
+          />
+        )}
+        {project.isDemo && (
+          <span className="absolute left-3 top-3 bg-[#252525]/90 px-2.5 py-1 text-[10px] tracking-[0.08em] font-semibold text-white">
+            {project.demoUrl?.startsWith('/') ? '匿名データによる機能デモ' : '制作サンプル'}
+          </span>
+        )}
       </div>
 
       {/* Content */}
-      <div className="p-3 sm:p-4 flex-1 flex flex-col">
-        <h3 className="text-sm sm:text-base font-bold text-business.accent mb-1.5 line-clamp-1">
+      <div className="p-5 sm:p-6 flex-1 flex flex-col">
+        <h3 className="font-display text-lg sm:text-xl font-semibold text-[#252525] mb-2 line-clamp-2">
           {project.title}
         </h3>
         
-        <p className="text-xs sm:text-sm text-business.light/80 mb-2 sm:mb-3 line-clamp-2 flex-1">
+        <p className="text-xs sm:text-sm leading-6 text-stone-600 mb-4 line-clamp-3 flex-1">
           {project.description}
         </p>
 
         {/* Tech Stack */}
-        <div className="flex flex-wrap gap-1 mb-2 sm:mb-3">
+        <div className="flex flex-wrap gap-1.5 mb-4">
           {project.techStack.slice(0, 2).map((tech, index) => (
             <span
               key={index}
-              className="px-1.5 py-0.5 bg-business.base text-business.accent rounded text-xs font-medium"
+              className="px-2 py-1 bg-[#efe9dd] text-[#725d34] text-[11px] font-medium"
             >
               {tech}
             </span>
           ))}
           {project.techStack.length > 2 && (
-            <span className="px-1.5 py-0.5 bg-business.base/50 text-business.accent rounded text-xs font-medium">
+            <span className="px-2 py-1 bg-[#efe9dd] text-[#725d34] text-[11px] font-medium">
               +{project.techStack.length - 2}
             </span>
           )}
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-1.5 sm:gap-2 mt-auto">
-          <motion.button
-            onClick={handleLike}
-            className={`flex items-center justify-center gap-1 px-2 py-1.5 rounded text-xs font-medium flex-1 ${
-              isLiked
-                ? 'bg-business.accent text-white'
-                : 'bg-business.base text-business.accent border border-business.accent'
-            }`}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-          >
-            <motion.div
-              animate={isLiked ? { scale: [1, 1.2, 1] } : {}}
-              transition={{ duration: 0.3 }}
-            >
-              <Heart className={`w-3 h-3 ${isLiked ? 'fill-current' : ''}`} />
-            </motion.div>
-            <span className="hidden sm:inline">{project.likes}</span>
-          </motion.button>
+        <div className="mt-auto">
           {project.demoUrl && (
             project.demoUrl.startsWith('/') ? (
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Link
                   to={project.demoUrl}
-                  className="flex items-center justify-center gap-1 px-2 py-1.5 bg-white text-business.green rounded border border-business.green text-xs font-medium flex-1 hover:bg-business.green hover:text-white transition-colors"
+                  state={{ returnTab: 'sample' }}
+                  className="flex items-center justify-center gap-1 px-3 py-2 bg-[#252525] text-white rounded-sm text-sm font-medium hover:bg-[#45433e] transition-colors"
                 >
                   <ExternalLink className="w-3 h-3" />
-                  <span className="hidden sm:inline">デモ</span>
+                  <span>機能デモを見る</span>
                 </Link>
               </motion.div>
             ) : (
@@ -107,13 +89,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onLike }) => {
                 href={project.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-1 px-2 py-1.5 bg-white text-business.green rounded border border-business.green text-xs font-medium flex-1 hover:bg-business.green hover:text-white transition-colors"
+                className="flex items-center justify-center gap-1 px-3 py-2 bg-[#252525] text-white rounded-sm text-sm font-medium hover:bg-[#45433e] transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.2 }}
               >
                 <ExternalLink className="w-3 h-3" />
-                <span className="hidden sm:inline">デモ</span>
+                <span>公開LPを見る</span>
               </motion.a>
             )
           )}

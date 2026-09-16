@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, MapPin } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Github, Linkedin, Mail, MapPin } from 'lucide-react';
 import { profile } from '../data/mockData';
 
 const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeYMecg-82GLXNKDyDIWxCIUalRRseSTT8vLRQ5lsuNL9C6-A/viewform?usp=dialog';
@@ -10,53 +10,65 @@ interface IntroProps {
 }
 
 const Intro: React.FC<IntroProps> = ({ onNavigateTo }) => {
-  const skillTags = profile.skills.slice(0, 8);
+  const focusAreas = [
+    { label: 'LP・Web制作', detail: '伝わる構成と、迷わない導線' },
+    { label: 'AI自動化', detail: '判断と確認を残した業務設計' },
+    { label: '業務効率化', detail: '日々の手作業を、続く仕組みに' },
+  ];
 
   return (
-    <section className="bg-business.blue text-business.light h-full overflow-y-auto" aria-labelledby="intro-heading">
-      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-6 sm:py-8 lg:py-12 min-h-full flex items-center justify-center">
-        <div className="max-w-7xl mx-auto w-full">
+    <section className="bg-[#f6f3ed] text-[#252525] h-full min-h-0 overflow-y-auto" aria-labelledby="intro-heading">
+      <div className="top-intro-shell relative isolate w-full mx-auto px-5 sm:px-8 lg:px-12 py-7 sm:py-10 min-h-full flex items-center justify-center overflow-hidden">
+        <div className="hero-orb hero-orb-one" />
+        <div className="hero-orb hero-orb-two" />
+        <div className="hero-grid" />
+        <div className="max-w-6xl mx-auto w-full relative z-10">
           <div className="flex justify-center">
             <motion.div
-              className="flex flex-col items-center text-center"
+              className="w-full flex flex-col items-center text-center"
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
             >
               <motion.div
-                className="flex-shrink-0 mb-4"
+                className="top-avatar flex-shrink-0 mb-4 sm:mb-5"
                 initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                animate={{ opacity: 1, scale: 1, y: [0, -8, 0] }}
+                transition={{
+                  opacity: { duration: 0.5, delay: 0.2 },
+                  scale: { duration: 0.5, delay: 0.2 },
+                  y: { duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.7 },
+                }}
               >
                 <img
                   src={profile.avatarUrl}
                   alt={profile.name}
-                  className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-full border-4 border-business.accent/30 shadow-2xl object-cover"
+                  className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-[#d7c49c] p-1 bg-[#f6f3ed] shadow-xl shadow-stone-900/15 object-cover"
                 />
               </motion.div>
 
               <motion.p
-                className="text-sm sm:text-base text-business.light/70 mb-4"
+                className="font-display text-[10px] sm:text-xs tracking-[0.28em] text-[#827456] mb-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.25 }}
               >
-                ミツル
+                ENGINEER / TOKYO
               </motion.p>
 
-              <div className="flex-1">
+              <div className="w-full flex-1 flex flex-col items-center">
                 <motion.h1
                   id="intro-heading"
-                  className="text-3xl sm:text-5xl font-bold mb-2 bg-gradient-to-r from-business.accent to-business.green bg-clip-text text-transparent"
+                  className="w-full max-w-4xl mx-auto text-center font-display text-5xl sm:text-6xl lg:text-7xl font-semibold leading-[1.1] text-[#252525] mb-4"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
                 >
-                  Osawaruのポートフォリオ
+                  <span className="block -translate-x-3 sm:-translate-x-8">伝わるLPと、</span>
+                  <span className="block translate-x-3 sm:translate-x-8">回る業務を。</span>
                 </motion.h1>
                 <motion.h2
-                  className="text-lg sm:text-xl text-business.accent mb-3 font-medium"
+                  className="w-full text-center text-[11px] sm:text-sm tracking-[0.16em] text-[#9a7d45] mb-4 font-semibold"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
@@ -64,7 +76,7 @@ const Intro: React.FC<IntroProps> = ({ onNavigateTo }) => {
                   {profile.title}
                 </motion.h2>
                 <motion.p
-                  className="text-base sm:text-lg text-business.light/90 mb-4 leading-relaxed max-w-2xl mx-auto"
+                  className="w-full text-center text-sm sm:text-base text-stone-600 mb-7 leading-7 sm:leading-8 max-w-xl mx-auto"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.5 }}
@@ -73,33 +85,32 @@ const Intro: React.FC<IntroProps> = ({ onNavigateTo }) => {
                 </motion.p>
 
                 <motion.div
-                  className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-4"
+                  className="grid w-full max-w-4xl grid-cols-3 border-y border-[#b5965a]/35 mb-6 bg-[#f6f3ed]/35 backdrop-blur-[2px]"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.55 }}
                 >
-                  {skillTags.map((skill, i) => (
-                    <span
-                      key={skill}
-                      className="px-2 sm:px-3 py-1 bg-business.accent/15 text-business.accent rounded-full text-xs sm:text-sm font-medium"
-                    >
-                      {skill}
-                    </span>
+                  {focusAreas.map((area, i) => (
+                    <div key={area.label} className={`px-2 py-3 sm:px-5 sm:py-4 text-left ${i !== 0 ? 'border-l border-[#b5965a]/35' : ''}`}>
+                      <p className="font-display text-sm sm:text-lg text-[#252525] mb-1">{area.label}</p>
+                      <p className="text-[11px] sm:text-sm leading-4 sm:leading-5 text-stone-500">{area.detail}</p>
+                    </div>
                   ))}
                 </motion.div>
 
                 <motion.div
-                  className="flex items-center justify-center gap-2 mb-4"
+                  className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 mb-5"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.6 }}
+                  transition={{ duration: 0.5, delay: 0.58 }}
                 >
-                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-business.accent" />
-                  <span className="text-sm sm:text-base text-business.light">{profile.location}</span>
+                  <span className="text-xs sm:text-sm text-stone-500">要件整理から設計・実装・公開まで対応</span>
+                  <span className="hidden sm:block h-4 w-px bg-[#b5965a]/50" />
+                  <span className="flex items-center gap-1.5 text-xs sm:text-sm text-stone-500"><MapPin className="w-4 h-4 text-[#9a7d45]" />{profile.location}</span>
                 </motion.div>
 
                 <motion.div
-                  className="flex gap-4 justify-center mb-6"
+                  className="top-social flex gap-3 justify-center mb-5"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.7 }}
@@ -108,7 +119,7 @@ const Intro: React.FC<IntroProps> = ({ onNavigateTo }) => {
                     href="https://github.com/hafljin"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 bg-business.accent/20 hover:bg-business.accent/30 rounded-full transition-all duration-200 text-business.accent"
+                    className="p-2.5 border border-[#b5965a]/40 hover:bg-[#eae2d3] rounded-full transition-all duration-200 text-[#6d5934]"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                     aria-label="GitHub"
@@ -119,7 +130,7 @@ const Intro: React.FC<IntroProps> = ({ onNavigateTo }) => {
                     href="https://linkedin.com/in/mic-nem-468b79312"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 bg-business.accent/20 hover:bg-business.accent/30 rounded-full transition-all duration-200 text-business.accent"
+                    className="p-2.5 border border-[#b5965a]/40 hover:bg-[#eae2d3] rounded-full transition-all duration-200 text-[#6d5934]"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                     aria-label="LinkedIn"
@@ -130,7 +141,7 @@ const Intro: React.FC<IntroProps> = ({ onNavigateTo }) => {
                     href={GOOGLE_FORM_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 bg-business.accent/20 hover:bg-business.accent/30 rounded-full transition-all duration-200 text-business.accent"
+                    className="p-2.5 border border-[#b5965a]/40 hover:bg-[#eae2d3] rounded-full transition-all duration-200 text-[#6d5934]"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                     aria-label="お問い合わせ"
@@ -140,7 +151,7 @@ const Intro: React.FC<IntroProps> = ({ onNavigateTo }) => {
                 </motion.div>
 
                 <motion.div
-                  className="flex flex-col sm:flex-row gap-3 justify-center"
+                  className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.75 }}
@@ -149,15 +160,15 @@ const Intro: React.FC<IntroProps> = ({ onNavigateTo }) => {
                     <>
                       <motion.button
                         onClick={() => onNavigateTo('services')}
-                        className="px-6 py-3 bg-business.accent text-white rounded-lg font-medium hover:opacity-90 transition-opacity"
+                        className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#252525] text-white rounded-sm font-medium hover:bg-[#45433e] transition-colors"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        作れるものを見る
+                        サービスを見る <ArrowUpRight className="w-4 h-4" />
                       </motion.button>
                       <motion.button
                         onClick={() => onNavigateTo('contact')}
-                        className="px-6 py-3 bg-business.green text-white rounded-lg font-medium hover:opacity-90 transition-opacity"
+                        className="px-5 py-2.5 border border-[#8d7343] text-[#5d4a29] rounded-sm font-medium hover:bg-[#eae2d3] transition-colors"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
@@ -166,6 +177,16 @@ const Intro: React.FC<IntroProps> = ({ onNavigateTo }) => {
                     </>
                   )}
                 </motion.div>
+                <motion.button
+                  type="button"
+                  className="mt-6 hidden sm:flex flex-col items-center gap-1 text-[10px] tracking-[0.16em] text-stone-500 hover:text-[#745d31]"
+                  onClick={() => onNavigateTo?.('services')}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.1 }}
+                >
+                  SCROLL TO EXPLORE <ArrowDown className="w-4 h-4 animate-bounce-subtle" />
+                </motion.button>
               </div>
             </motion.div>
           </div>

@@ -17,7 +17,7 @@ export interface DemoConfig {
   // 追加テキスト（ストーリー・訴求など）
   story?: string;
   tagline?: string;
-  webAppType?: 'booking' | 'inventory' | 'inquiry' | 'member';
+  webAppType?: 'booking' | 'inventory' | 'inquiry' | 'member' | 'ai-automation';
   learningItems?: { id: string; title: string; content: string }[];
 }
 
@@ -186,6 +186,17 @@ export const demoConfigs: Record<string, DemoConfig> = {
     tagline: '業務システム・クラウド・DX。課題解決のパートナー。',
     about: '製造業・小売業・サービス業など、さまざまな業種のお客様に、業務システム開発・クラウド導入・DX支援を提供しています。既存業務の効率化から、新規事業のシステム構築まで。「こんなことができたら」というご要望を、まずはお聞かせください。スモールスタートから、段階的な拡張までご相談に応じます。'
   },
+  // ─── AI自動化 ─────────────────────────────────────
+  '21': {
+    id: '21',
+    title: 'AI問い合わせ一次対応',
+    template: 'webapp',
+    theme: 'indigo',
+    webAppType: 'ai-automation',
+    catchcopy: '匿名の問い合わせ文をAIが分類し、返信文の下書きを作る機能サンプル。',
+    tagline: '一次対応の負担を減らし、対応スピードと漏れ防止を両立。',
+    story: 'このページは匿名の例文のみを使った機能サンプルです。実際の運用では、生成AIをフォームやメール受信と連携し、分類・下書き作成までを補助します。出力は担当者が確認してから使う設計です。'
+  },
   // ─── Webアプリ ─────────────────────────────────────
   '14': {
     id: '14',
@@ -202,7 +213,7 @@ export const demoConfigs: Record<string, DemoConfig> = {
     template: 'webapp',
     theme: 'emerald',
     webAppType: 'inventory',
-    catchcopy: 'EC・小売店向け。商品・在庫を一元管理。発注アラートで欠品を防ぐ。',
+    catchcopy: '匿名のサンプルデータで、商品・在庫・発注の目安を一覧管理する機能デモ。',
     tagline: '棚卸しの手間を減らし、適正在庫を維持。'
   },
   '16': {

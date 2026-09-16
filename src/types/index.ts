@@ -12,6 +12,8 @@ export interface Project {
   likes: number; // Mock data - stored locally only
   comments: Comment[]; // Mock data - not persisted
   category?: string;
+  beforeAfter?: { before: string; after: string };
+  isDemo?: boolean;
 }
 
 export interface ProjectCategory {

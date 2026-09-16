@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Package, MessageSquare, User, ChevronRight, Download } from 'lucide-react';
+import { AlertTriangle, BarChart3, Boxes, Calendar, ChevronRight, Download, Loader2, MessageSquare, Minus, Package, Plus, Search, Send, Sparkles, User } from 'lucide-react';
 import type { DemoConfig } from '../demoConfig';
 import { themeColors, defaultTheme } from '../themeColors';
 
@@ -15,7 +15,125 @@ const WebAppTemplate: React.FC<{ config: DemoConfig }> = ({ config }) => {
   if (type === 'inventory') return <InventoryDemo config={config} />;
   if (type === 'inquiry') return <InquiryDemo config={config} />;
   if (type === 'member') return <MemberDemo config={config} />;
+  if (type === 'ai-automation') return <AiAutomationDemo config={config} />;
   return <BookingDemo config={config} />;
+};
+
+type AutomationResult = {
+  category: string;
+  urgency: string;
+  reply: string;
+};
+
+type ChatMessage = {
+  id: number;
+  sender: 'customer' | 'bot' | 'agent';
+  text: string;
+  time: string;
+};
+
+const analyzeInquiry = (text: string): AutomationResult => {
+  const lower = text.toLowerCase();
+  let category = '一般のお問い合わせ';
+  if (/(壊れ|不具合|故障|動かない|エラー)/.test(text) || /error|broken/.test(lower)) {
+    category = 'クレーム・不具合報告';
+  } else if (/(見積|価格|料金|いくら)/.test(text)) {
+    category = '見積もり・料金相談';
+  } else if (/(予約|日程|空き|来店)/.test(text)) {
+    category = '予約・日程調整';
+  }
+
+  const urgency = /(至急|今すぐ|急ぎ|困って)/.test(text) ? '高' : '通常';
+
+  const replyMap: Record<string, string> = {
+    'クレーム・不具合報告': 'この度はご不便をおかけし申し訳ございません。担当より詳細を確認のうえ、本日中にご連絡いたします。',
+    '見積もり・料金相談': 'お問い合わせありがとうございます。内容を確認し、概算のお見積りを1営業日以内にお送りいたします。',
+    '予約・日程調整': 'ご連絡ありがとうございます。空き状況を確認し、候補日時を折り返しご案内いたします。',
+    '一般のお問い合わせ': 'お問い合わせいただきありがとうございます。内容を確認し、担当より改めてご連絡いたします。',
+  };
+
+  return { category, urgency, reply: replyMap[category] };
+};
+
+const AiAutomationDemo: React.FC<{ config: DemoConfig }> = ({ config }) => {
+  const theme = getTheme(config);
+  const [draft, setDraft] = useState('エアコンから異音がして困っています。至急見てもらえますか？料金の目安も知りたいです。');
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    { id: 1, sender: 'customer', text: 'エアコンから異音がして困っています。至急見てもらえますか？料金の目安も知りたいです。', time: '10:12' },
+    { id: 2, sender: 'bot', text: '内容を確認しました。担当者が確認後、ご案内します。', time: '10:12' },
+  ]);
+  const [status, setStatus] = useState<'idle' | 'analyzing'>('idle');
+  const [result, setResult] = useState<AutomationResult | null>(null);
+
+  const handleSend = () => {
+    if (!draft.trim() || status === 'analyzing') return;
+    const inquiry = draft.trim();
+    setMessages((current) => [...current, { id: Date.now(), sender: 'customer', text: inquiry, time: 'いま' }]);
+    setDraft('');
+    setStatus('analyzing');
+    setTimeout(() => {
+      const analysis = analyzeInquiry(inquiry);
+      setResult(analysis);
+      setMessages((current) => [...current, { id: Date.now() + 1, sender: 'bot', text: analysis.reply, time: 'いま' }]);
+      setStatus('idle');
+    }, 650);
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-100 text-slate-800">
+      <header className="bg-white border-b border-slate-200 shadow-sm">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-3">
+          <h1 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+            <Sparkles className={`w-5 h-5 ${theme.text}`} />
+            {config.title}
+          </h1>
+          <span className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700">匿名データによる機能デモ</span>
+        </div>
+      </header>
+
+      <main className="max-w-6xl mx-auto px-4 py-6">
+        <p className="mb-5 text-sm text-slate-600">{config.catchcopy}</p>
+        <div className="grid gap-5 lg:grid-cols-[240px_minmax(0,1fr)_260px]">
+          <aside className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div className="mb-4 flex items-center justify-between"><p className="font-semibold">受信トレイ</p><span className="rounded-full bg-indigo-100 px-2 py-0.5 text-xs text-indigo-700">3</span></div>
+            {['要対応：空調の不具合', '見積もりのご相談', '予約日時の変更'].map((item, index) => (
+              <button key={item} className={`mb-2 w-full rounded-xl p-3 text-left text-sm transition-colors ${index === 0 ? 'bg-indigo-50 text-indigo-900' : 'hover:bg-slate-50'}`}>
+                <span className="block font-medium">{item}</span><span className="mt-1 block text-xs text-slate-500">{index === 0 ? 'いま' : '本日 09:40'}</span>
+              </button>
+            ))}
+          </aside>
+
+          <motion.section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+            <div className="border-b border-slate-100 px-5 py-4"><p className="font-semibold">要対応：空調の不具合</p><p className="mt-1 text-xs text-slate-500">Webフォームから受信</p></div>
+            <div className="min-h-[360px] space-y-4 bg-slate-50/60 p-5">
+              {messages.map((message) => (
+                <div key={message.id} className={`flex ${message.sender === 'customer' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[88%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${message.sender === 'customer' ? `${theme.bg} text-white rounded-br-sm` : 'bg-white text-slate-700 shadow-sm rounded-bl-sm'}`}>
+                    <p>{message.text}</p><span className={`mt-1 block text-[10px] ${message.sender === 'customer' ? 'text-white/70' : 'text-slate-400'}`}>{message.sender === 'bot' ? 'AIアシスタント ・ ' : ''}{message.time}</span>
+                  </div>
+                </div>
+              ))}
+              {status === 'analyzing' && <div className="flex items-center gap-2 text-sm text-slate-500"><Loader2 className="h-4 w-4 animate-spin" />AIが内容を整理しています</div>}
+            </div>
+            <div className="flex gap-2 border-t border-slate-100 p-3">
+              <input value={draft} onChange={(event) => setDraft(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter') handleSend(); }} className="min-w-0 flex-1 rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-indigo-500" placeholder="問い合わせ文を入力" />
+              <button onClick={handleSend} className={`inline-flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white ${theme.bg}`}><Send className="h-4 w-4" />送信</button>
+            </div>
+          </motion.section>
+
+          <aside className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="mb-5 flex items-center gap-2"><Sparkles className={`h-5 w-5 ${theme.text}`} /><h2 className="font-semibold">AIによる整理</h2></div>
+            <div className="space-y-4 text-sm">
+              <div><p className="text-xs text-slate-500">分類</p><p className="mt-1 font-medium">{result?.category ?? '不具合・修理相談'}</p></div>
+              <div><p className="text-xs text-slate-500">緊急度</p><span className={`mt-1 inline-block rounded-full px-2.5 py-1 text-xs font-semibold ${(result?.urgency ?? '高') === '高' ? 'bg-red-100 text-red-700' : 'bg-slate-100 text-slate-600'}`}>{result?.urgency ?? '高'}</span></div>
+              <div><p className="text-xs text-slate-500">推奨アクション</p><p className="mt-1 leading-relaxed">担当者が内容を確認し、本日中に折り返す</p></div>
+            </div>
+            <div className="mt-6 border-t border-slate-100 pt-4 text-xs leading-relaxed text-slate-500">AIの提案は、担当者が確認してから送信・処理する設計です。</div>
+          </aside>
+        </div>
+      </main>
+    </div>
+  );
 };
 
 const BookingDemo: React.FC<{ config: DemoConfig }> = ({ config }) => {
@@ -117,37 +235,65 @@ const BookingDemo: React.FC<{ config: DemoConfig }> = ({ config }) => {
 };
 
 const InventoryDemo: React.FC<{ config: DemoConfig }> = ({ config }) => {
-  const items = [
-    { id: 1, name: '商品A', sku: 'SKU-001', stock: 45, min: 10 },
-    { id: 2, name: '商品B', sku: 'SKU-002', stock: 8, min: 15 },
-    { id: 3, name: '商品C', sku: 'SKU-003', stock: 120, min: 20 },
-    { id: 4, name: '商品D', sku: 'SKU-004', stock: 5, min: 10 },
-    { id: 5, name: '商品E', sku: 'SKU-005', stock: 32, min: 25 }
-  ];
-
+  const [items, setItems] = useState([
+    { id: 1, name: 'ワイヤレスマウス', sku: 'WM-402', stock: 45, min: 20, incoming: 0, category: '周辺機器', location: 'A-01-03', price: 3480, trend: [28, 31, 29, 38, 41, 45] },
+    { id: 2, name: 'USB-Cハブ', sku: 'UC-118', stock: 8, min: 15, incoming: 20, category: '周辺機器', location: 'A-02-01', price: 4980, trend: [33, 28, 22, 17, 12, 8] },
+    { id: 3, name: 'モニターアーム', sku: 'MA-021', stock: 24, min: 12, incoming: 0, category: 'オフィス', location: 'B-03-02', price: 7980, trend: [18, 21, 26, 23, 27, 24] },
+    { id: 4, name: 'ノートPCスタンド', sku: 'NS-310', stock: 5, min: 10, incoming: 10, category: 'オフィス', location: 'B-01-04', price: 2980, trend: [24, 18, 14, 10, 7, 5] },
+    { id: 5, name: 'キーボード', sku: 'KB-090', stock: 32, min: 18, incoming: 0, category: '周辺機器', location: 'A-03-02', price: 6280, trend: [21, 24, 27, 31, 28, 32] },
+    { id: 6, name: 'Webカメラ', sku: 'WC-509', stock: 17, min: 12, incoming: 0, category: '会議機器', location: 'C-02-01', price: 5480, trend: [12, 14, 18, 21, 19, 17] },
+  ]);
+  const [query, setQuery] = useState('');
+  const [filter, setFilter] = useState<'all' | 'low'>('all');
+  const [selectedId, setSelectedId] = useState(2);
+  const [notice, setNotice] = useState('');
   const alertCount = items.filter((i) => i.stock < i.min).length;
+  const stockTotal = items.reduce((sum, item) => sum + item.stock, 0);
+  const incomingTotal = items.reduce((sum, item) => sum + item.incoming, 0);
+  const stockValue = items.reduce((sum, item) => sum + item.stock * item.price, 0);
+  const selectedItem = items.find((item) => item.id === selectedId) ?? items[0];
+  const visibleItems = items.filter((item) => {
+    const matchesQuery = item.name.includes(query) || item.sku.toLowerCase().includes(query.toLowerCase());
+    return matchesQuery && (filter === 'all' || item.stock < item.min);
+  });
+  const adjustStock = (id: number, amount: number) => setItems((current) => current.map((item) => item.id === id ? { ...item, stock: Math.max(0, item.stock + amount) } : item));
+  const createOrders = () => {
+    const orderCount = items.filter((item) => item.stock < item.min && item.incoming === 0).length;
+    setItems((current) => current.map((item) => item.stock < item.min && item.incoming === 0 ? { ...item, incoming: item.min * 2 - item.stock } : item));
+    setNotice(orderCount ? `${orderCount}件の発注候補を作成しました` : '追加の発注候補はありません');
+  };
+  const getStatus = (item: typeof items[number]) => item.stock <= item.min * 0.6 ? '緊急' : item.stock < item.min ? '要発注' : item.stock < item.min * 1.5 ? '注意' : '適正';
 
   return (
-    <div className="min-h-screen bg-slate-100">
+    <div className="min-h-screen bg-slate-100 text-slate-800">
       <header className="bg-white border-b border-slate-200 shadow-sm">
-        <div className="max-w-5xl mx-auto px-4 py-4">
-          <h1 className="text-xl font-bold text-slate-900">{config.title}</h1>
-          <p className="text-slate-600 text-sm mt-0.5">{config.catchcopy}</p>
-          {alertCount > 0 && (
-            <div className="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-sm">
-              <Package className="w-4 h-4" />
-              {alertCount}件の商品が発注基準を下回っています
-            </div>
-          )}
+        <div className="max-w-6xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-3">
+          <div><h1 className="text-xl font-bold text-slate-900">{config.title}</h1><p className="text-slate-600 text-sm mt-0.5">{config.catchcopy}</p></div>
+          <div className="flex items-center gap-2"><span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">匿名データによる機能デモ</span><button onClick={createOrders} className="rounded-lg bg-emerald-600 px-3 py-2 text-sm font-semibold text-white hover:bg-emerald-700">発注候補を作成</button></div>
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 py-8">
-        <motion.div
-          className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
+      <main className="max-w-6xl mx-auto px-4 py-6">
+        {notice && <div className="mb-5 flex items-center justify-between rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900"><span>{notice}</span><button onClick={() => setNotice('')} className="text-emerald-700">閉じる</button></div>}
+        <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          {[
+            { label: '登録商品', value: `${items.length} SKU`, icon: Boxes, color: 'text-slate-700' },
+            { label: '現在庫合計', value: `${stockTotal} 点`, icon: BarChart3, color: 'text-indigo-600' },
+            { label: '要発注', value: `${alertCount} 件`, icon: AlertTriangle, color: 'text-rose-600' },
+            { label: '入荷予定', value: `${incomingTotal} 点`, icon: Package, color: 'text-emerald-600' },
+            { label: '在庫金額', value: `¥${stockValue.toLocaleString()}`, icon: BarChart3, color: 'text-amber-600' },
+          ].map((stat) => (
+            <div key={stat.label} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"><div className="flex items-center justify-between"><p className="text-sm text-slate-500">{stat.label}</p><stat.icon className={`h-5 w-5 ${stat.color}`} /></div><p className="mt-3 text-2xl font-semibold text-slate-900">{stat.value}</p></div>
+          ))}
+        </div>
+
+        {alertCount > 0 && <div className="mb-5 flex items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900"><AlertTriangle className="h-4 w-4" />{alertCount}件の商品が発注基準を下回っています。入荷予定も確認してください。</div>}
+
+        <motion.div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+          <div className="flex flex-col gap-3 border-b border-slate-100 p-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="relative max-w-sm flex-1"><Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" /><input value={query} onChange={(event) => setQuery(event.target.value)} className="w-full rounded-xl border border-slate-200 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-emerald-500" placeholder="商品名・SKUで検索" /></div>
+            <div className="flex gap-2"><button onClick={() => setFilter('all')} className={`rounded-lg px-3 py-2 text-sm ${filter === 'all' ? 'bg-slate-800 text-white' : 'bg-slate-100 text-slate-600'}`}>すべて</button><button onClick={() => setFilter('low')} className={`rounded-lg px-3 py-2 text-sm ${filter === 'low' ? 'bg-rose-600 text-white' : 'bg-rose-50 text-rose-700'}`}>要発注のみ</button></div>
+          </div>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
@@ -156,39 +302,46 @@ const InventoryDemo: React.FC<{ config: DemoConfig }> = ({ config }) => {
                   <th className="text-left py-4 px-6 text-sm font-semibold text-slate-700">SKU</th>
                   <th className="text-right py-4 px-6 text-sm font-semibold text-slate-700">在庫</th>
                   <th className="text-right py-4 px-6 text-sm font-semibold text-slate-700">最低在庫</th>
+                  <th className="text-right py-4 px-6 text-sm font-semibold text-slate-700">入荷予定</th>
                   <th className="text-center py-4 px-6 text-sm font-semibold text-slate-700">状態</th>
+                  <th className="text-right py-4 px-6 text-sm font-semibold text-slate-700">操作</th>
                 </tr>
               </thead>
               <tbody>
-                {items.map((item, i) => (
+                {visibleItems.map((item, i) => (
                   <motion.tr
                     key={item.id}
-                    className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors"
+                    className={`cursor-pointer border-b border-slate-100 transition-colors hover:bg-slate-50/50 ${selectedId === item.id ? 'bg-emerald-50/50' : ''}`}
+                    onClick={() => setSelectedId(item.id)}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 }}
                   >
-                    <td className="py-4 px-6 font-medium text-slate-900">{item.name}</td>
+                    <td className="py-4 px-6"><p className="font-medium text-slate-900">{item.name}</p><p className="mt-0.5 text-xs text-slate-500">{item.category}</p></td>
                     <td className="py-4 px-6 text-slate-500 text-sm">{item.sku}</td>
-                    <td className="py-4 px-6 text-right font-semibold">{item.stock}</td>
+                    <td className="py-4 px-6 text-right font-semibold text-slate-900">{item.stock}</td>
                     <td className="py-4 px-6 text-right text-slate-600">{item.min}</td>
+                    <td className="py-4 px-6 text-right text-emerald-700">{item.incoming ? `+${item.incoming}` : '—'}</td>
                     <td className="py-4 px-6 text-center">
-                      {item.stock < item.min ? (
-                        <span className="inline-block px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-semibold">
-                          要発注
-                        </span>
-                      ) : (
-                        <span className="inline-block px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold">
-                          OK
-                        </span>
-                      )}
+                      <span className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${getStatus(item) === '緊急' ? 'bg-rose-100 text-rose-700' : getStatus(item) === '要発注' ? 'bg-orange-100 text-orange-700' : getStatus(item) === '注意' ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'}`}>{getStatus(item)}</span>
                     </td>
+                    <td className="py-4 px-6"><div className="flex justify-end gap-1"><button onClick={() => adjustStock(item.id, -1)} aria-label={`${item.name}の在庫を減らす`} className="rounded-lg border border-slate-200 p-1.5 hover:bg-slate-100"><Minus className="h-3.5 w-3.5" /></button><button onClick={() => adjustStock(item.id, 1)} aria-label={`${item.name}の在庫を増やす`} className="rounded-lg border border-slate-200 p-1.5 hover:bg-slate-100"><Plus className="h-3.5 w-3.5" /></button></div></td>
                   </motion.tr>
                 ))}
+                {visibleItems.length === 0 && <tr><td colSpan={7} className="px-6 py-12 text-center text-sm text-slate-500">該当する商品はありません</td></tr>}
               </tbody>
             </table>
           </div>
         </motion.div>
+
+        <div className="mt-6 grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
+          <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="flex items-center justify-between"><div><p className="text-sm text-slate-500">選択中の商品</p><h2 className="mt-1 text-lg font-semibold">{selectedItem.name}</h2></div><span className="rounded-lg bg-slate-100 px-2.5 py-1 text-xs text-slate-600">{selectedItem.location}</span></div>
+            <div className="mt-5 grid grid-cols-3 gap-3 text-center"><div className="rounded-xl bg-slate-50 p-3"><p className="text-xs text-slate-500">現在庫</p><p className="mt-1 text-xl font-semibold">{selectedItem.stock}</p></div><div className="rounded-xl bg-slate-50 p-3"><p className="text-xs text-slate-500">最低在庫</p><p className="mt-1 text-xl font-semibold">{selectedItem.min}</p></div><div className="rounded-xl bg-slate-50 p-3"><p className="text-xs text-slate-500">単価</p><p className="mt-1 text-xl font-semibold">¥{selectedItem.price.toLocaleString()}</p></div></div>
+            <div className="mt-5"><p className="mb-3 text-sm font-medium text-slate-700">在庫推移（過去6週）</p><div className="flex h-24 items-end gap-2">{selectedItem.trend.map((value, index) => <div key={`${value}-${index}`} className="flex flex-1 flex-col items-center gap-1"><div className="w-full rounded-t bg-emerald-500/80" style={{ height: `${Math.max(10, value / Math.max(...selectedItem.trend) * 78)}px` }} /><span className="text-[10px] text-slate-400">{index + 1}週前</span></div>)}</div></div>
+          </section>
+          <aside className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"><h2 className="font-semibold">発注の目安</h2><div className="mt-4 space-y-3 text-sm"><div className="flex justify-between"><span className="text-slate-500">状態</span><span className="font-medium">{getStatus(selectedItem)}</span></div><div className="flex justify-between"><span className="text-slate-500">入荷予定</span><span className="font-medium text-emerald-700">{selectedItem.incoming ? `+${selectedItem.incoming} 点` : 'なし'}</span></div><div className="flex justify-between"><span className="text-slate-500">推奨発注数</span><span className="font-medium">{Math.max(0, selectedItem.min * 2 - selectedItem.stock - selectedItem.incoming)} 点</span></div></div><button onClick={() => { setFilter('low'); setQuery(selectedItem.name); }} className="mt-6 w-full rounded-lg border border-emerald-600 py-2.5 text-sm font-semibold text-emerald-700 hover:bg-emerald-50">発注対象を一覧で確認</button></aside>
+        </div>
       </main>
     </div>
   );
